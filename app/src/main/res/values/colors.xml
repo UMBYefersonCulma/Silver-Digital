@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_80">#D0BCFF</color>
+    <color name="purple_grey_80">#CCC2DC</color>
+    <color name="pink_80">#EFB8C8</color>
+
+    <color name="purple_40">#6650a4</color>
+    <color name="purple_grey_40">#625b71</color>
+    <color name="pink_40">#7D5260</color>
+
+    <!-- Additional colors for light and dark theme -->
+    <color name="background_light">#FFFFFF</color>
+    <color name="background_dark">#1C1B1F</color>
+    <color name="surface_light">#FFFFFBFE</color>
+    <color name="surface_dark">#1C1B1F</color>
+</resources>

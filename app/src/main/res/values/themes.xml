@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tema Claro -->
+    <style name="Theme.SilverDigital.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/purple_40</item>
+        <item name="colorSecondary">@color/purple_grey_40</item>
+        <item name="android:colorBackground">@color/background_light</item>
+    </style>
+
+    <!-- Tema Oscuro -->
+    <style name="Theme.SilverDigital.Dark" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">@color/purple_80</item>
+        <item name="colorSecondary">@color/purple_grey_80</item>
+        <item name="android:colorBackground">@color/background_dark</item>
+    </style>
+</resources>
