@@ -21,4 +21,7 @@ public interface MedicamentoDao {
 
     @Query("SELECT * FROM medicamentos")
     List<Medicamento> obtenerTodos();
+
+    @Query("SELECT * FROM medicamentos WHERE id = :medicamentoId LIMIT 1")
+    Medicamento obtenerPorId(int medicamentoId);
 }
