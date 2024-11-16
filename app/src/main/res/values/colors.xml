@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_80">#D0BCFF</color>
-    <color name="purple_grey_80">#CCC2DC</color>
-    <color name="pink_80">#EFB8C8</color>
-
-    <color name="purple_40">#6650a4</color>
-    <color name="purple_grey_40">#625b71</color>
-    <color name="pink_40">#7D5260</color>
-
-    <!-- Additional colors for light and dark theme -->
-    <color name="background_light">#FFFFFF</color>
-    <color name="background_dark">#1C1B1F</color>
-    <color name="surface_light">#FFFFFBFE</color>
-    <color name="surface_dark">#1C1B1F</color>
-    <color name="backgroundColor">#F5F5F5</color> <!-- Gris claro para el fondo -->
-    <color name="primaryColor">#00BCD4</color> <!-- Verde para los botones y la barra inferior -->
-    <color name="buttonColor">#455A64</color> <!-- Azul oscuro para los botones -->
-    <color name="buttonTextColor">#FFFFFF</color> <!-- Blanco para el texto de los botones -->
-    <color name="textColorPrimary">#333333</color> <!-- Gris oscuro para el texto principal -->
+    <color name="background_color">#FFFFFF</color>
+    <color name="primary_text">#333333</color>
+    <color name="secondary_text">#666666</color>
+    <color name="button_background">#4CAF50</color>
+    <color name="button_text">#FFFFFF</color>
+    <color name="warning_color">#FF6F61</color>
+    <color name="accessible_green">#81C784</color>
+    <color name="accessible_red">#E57373</color>
+    <color name="primaryColor">#6200EE</color>
+    <color name="backgroundColor">#FFFFFF</color>
     <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
+    <color name="purple_80">#B388FF</color>
+    <color name="purple_grey_80">#BDBDBD</color>
+    <color name="background_dark">#121212</color>
+    <color name="purple_40">#7C4DFF</color>
+    <color name="purple_grey_40">#757575</color>
+    <color name="background_light">#FFFFFF</color>
 
+    <!-- Colores adicionales necesarios -->
+    <color name="buttonColor">#4CAF50</color> <!-- Puedes elegir un color distinto si deseas -->
+    <color name="buttonTextColor">#FFFFFF</color> <!-- Color del texto en los botones -->
 </resources>

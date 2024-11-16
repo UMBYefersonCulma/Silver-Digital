@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Tema Principal de Silver Digital (Claro) -->
-    <style name="Theme.SilverDigital" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/purple_40</item>
-        <item name="colorSecondary">@color/purple_grey_40</item>
-        <item name="android:colorBackground">@color/background_light</item>
+    <!-- Tema principal de la aplicación -->
+    <style name="Theme.SilverDigital" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Fondo de la ventana principal -->
+        <item name="android:windowBackground">@color/background_color</item>
+        <!-- Color principal del texto -->
+        <item name="android:textColor">@color/primary_text</item>
+        <!-- Color del botón de acción -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/background_dark</item>
+        <item name="colorAccent">@color/purple_40</item>
     </style>
 
+    <!-- Tema de la Aplicación -->
+    <style name="AppTheme" parent="Theme.SilverDigital">
+        <!-- Definimos la misma configuración para AppTheme para mantener la consistencia -->
+    </style>
+
+    <!-- Estilo de los botones -->
+    <style name="ButtonStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/button_background</item>
+        <item name="android:textColor">@color/button_text</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <!-- Estilo del texto -->
+    <style name="TextStyle">
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 </resources>

@@ -17,61 +17,35 @@
 
     <!-- Main Content Layout -->
     <LinearLayout
-        android:id="@+id/main_content"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_below="@id/toolbar"
-        android:padding="24dp"
-        android:layout_above="@id/bottom_navigation">
+        android:padding="16dp"
+        android:background="@color/background_color">
 
-        <!-- RecyclerView for Medications List -->
+        <TextView
+            android:id="@+id/tvTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Silver Digital"
+            android:textSize="24sp"
+            android:textColor="@color/primary_text"
+            android:gravity="center"
+            android:fontFamily="@font/roboto"
+            android:paddingBottom="16dp" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMedicamentos"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginBottom="16dp"/>
+            android:layout_weight="1" />
 
-        <!-- Buttons for Main Sections -->
         <Button
             android:id="@+id/btnAgregarMedicamento"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Agregar Medicamento"
-            android:background="@drawable/rounded_button"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="24dp"/>
+            style="@style/ButtonStyle"
+            android:text="Agregar Medicamento" />
 
-        <Button
-            android:id="@+id/btn_medicamentos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Medicamentos"
-            android:textSize="18sp"
-            android:background="@drawable/rounded_button"
-            android:layout_marginBottom="16dp"
-            android:textColor="@color/buttonTextColor"/>
-
-        <Button
-            android:id="@+id/btn_citas_medicas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Citas Médicas"
-            android:textSize="18sp"
-            android:background="@drawable/rounded_button"
-            android:layout_marginBottom="16dp"
-            android:textColor="@color/buttonTextColor"/>
-
-        <Button
-            android:id="@+id/btn_recomendaciones"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Recomendaciones"
-            android:textSize="18sp"
-            android:background="@drawable/rounded_button"
-            android:layout_marginBottom="16dp"
-            android:textColor="@color/buttonTextColor"/>
     </LinearLayout>
 
     <!-- Bottom Navigation for additional access like Home and Profile -->

@@ -1,26 +1,38 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="12dp"
+    android:background="@drawable/border_background"
+    android:layout_margin="8dp"
+    android:elevation="4dp">
 
     <TextView
         android:id="@+id/tvNombre"
+        style="@style/TextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textSize="20sp"
+        android:textColor="@color/primary_text"
+        android:textStyle="bold"
+        android:text="Nombre del Medicamento"
+        android:paddingBottom="4dp" />
 
     <TextView
         android:id="@+id/tvDosis"
+        style="@style/TextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp" />
+        android:text="Dosis: "
+        android:textColor="@color/secondary_text"
+        android:paddingBottom="4dp" />
 
     <TextView
         android:id="@+id/tvHorario"
+        style="@style/TextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp" />
+        android:text="Horario"
+        android:textColor="@color/secondary_text"/>
 </LinearLayout>
