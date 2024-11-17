@@ -1,17 +1,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/nav_home"
         android:icon="@drawable/ic_launcher_background"
         android:title="Home"
         android:textColor="@color/buttonTextColor"/>
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/nav_medicamentos"
         android:icon="@drawable/ic_launcher_foreground"
-        android:title="Dashboard"
+        android:title="Medicamentos"
         android:textColor="@color/buttonTextColor"/>
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/nav_citas"
         android:icon="@drawable/ic_launcher_background"
-        android:title="Notifications"
+        android:title="Citas"
         android:textColor="@color/buttonTextColor"/>
 </menu>

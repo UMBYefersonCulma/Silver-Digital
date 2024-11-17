@@ -3,7 +3,7 @@
     <color name="background_color">#FFFFFF</color>
     <color name="primary_text">#333333</color>
     <color name="secondary_text">#666666</color>
-    <color name="button_background">#4CAF50</color>
+    <color name="button_background">#B3FFB4</color>
     <color name="button_text">#FFFFFF</color>
     <color name="warning_color">#FF6F61</color>
     <color name="accessible_green">#81C784</color>
@@ -17,8 +17,10 @@
     <color name="purple_40">#7C4DFF</color>
     <color name="purple_grey_40">#757575</color>
     <color name="background_light">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray">#878787</color>
 
     <!-- Colores adicionales necesarios -->
-    <color name="buttonColor">#4CAF50</color> <!-- Puedes elegir un color distinto si deseas -->
+    <color name="buttonColor">#9EFFA2</color> <!-- Puedes elegir un color distinto si deseas -->
     <color name="buttonTextColor">#FFFFFF</color> <!-- Color del texto en los botones -->
 </resources>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <!-- Primer Medicamento -->
+    <LinearLayout
+        android:id="@+id/linearLayoutMedicamento1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:background="@drawable/border_background"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:id="@+id/tvNombreMedicamento1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre 1"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvDosisMedicamento1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dosis: 123"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvHorarioMedicamento1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Horario: 10:00"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <!-- Segundo Medicamento -->
+    <LinearLayout
+        android:id="@+id/linearLayoutMedicamento2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:background="@drawable/border_background">
+
+        <TextView
+            android:id="@+id/tvNombreMedicamento2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre 2"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvDosisMedicamento2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dosis: 456"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvHorarioMedicamento2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Horario: 12:00"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</LinearLayout>

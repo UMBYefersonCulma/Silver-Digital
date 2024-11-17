@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,6 +18,7 @@ import com.example.silverdigital.data.database.AppDatabase;
 import com.example.silverdigital.data.model.Medicamento;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 public class MedicamentoFormActivity extends AppCompatActivity {
 
@@ -31,6 +31,7 @@ public class MedicamentoFormActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicamento_form);
 
+        // Inicializar vistas
         etNombre = findViewById(R.id.etNombre);
         etDosis = findViewById(R.id.etDosis);
         etHorario = findViewById(R.id.etHorario);
@@ -57,23 +58,29 @@ public class MedicamentoFormActivity extends AppCompatActivity {
     }
 
     private void mostrarTimePicker() {
-        // Obtener la hora actual para mostrarla en el TimePicker por defecto
-        Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
+        // Obtener la hora actual
+        Calendar currentTime = Calendar.getInstance();
+        int currentHour = currentTime.get(Calendar.HOUR_OF_DAY);
+        int currentMinute = currentTime.get(Calendar.MINUTE);
 
-        // Crear y mostrar el TimePickerDialog
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, (view, selectedHour, selectedMinute) -> {
-            // Actualizar etHorario con la hora seleccionada
-            etHorario.setText(String.format("%02d:%02d", selectedHour, selectedMinute));
-        }, hour, minute, true);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                this,
+                (view, hourOfDay, minute) -> {
+                    String horaFormateada = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute);
+                    etHorario.setText(horaFormateada);
+                },
+                currentHour, // Hora actual
+                currentMinute, // Minuto actual
+                true // Modo 24 horas
+        );
+
         timePickerDialog.show();
     }
 
     private void guardarMedicamento() {
-        String nombre = etNombre.getText().toString();
-        String dosis = etDosis.getText().toString();
-        String horario = etHorario.getText().toString();
+        String nombre = etNombre.getText().toString().trim();
+        String dosis = etDosis.getText().toString().trim();
+        String horario = etHorario.getText().toString().trim();
 
         if (nombre.isEmpty() || dosis.isEmpty() || horario.isEmpty()) {
             Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();

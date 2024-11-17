@@ -5,20 +5,25 @@ import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
+import com.example.silverdigital.adapters.CitasAdapter;
+import com.example.silverdigital.adapters.ConsejosAdapter;
+import com.example.silverdigital.adapters.MedicamentoPagerAdapter;
 import com.example.silverdigital.data.database.AppDatabase;
 import com.example.silverdigital.data.model.Medicamento;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -26,8 +31,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView rvMedicamentos;
-    private MedicamentoAdapter adapter;
+    private ViewPager2 viewPagerMedicamentos;
     private static final String CHANNEL_ID = "medication_reminder_channel";
     private static final int REQUEST_CODE_ADD_MEDICAMENTO = 1;
     private static final int REQUEST_CODE_EDIT_MEDICAMENTO = 2;
@@ -39,15 +43,31 @@ public class MainActivity extends AppCompatActivity {
 
         createNotificationChannel();
 
-        rvMedicamentos = findViewById(R.id.rvMedicamentos);
-        rvMedicamentos.setLayoutManager(new LinearLayoutManager(this));
+        // Configuración del botón de configuraciones
+        findViewById(R.id.btnSettings).setOnClickListener(v -> {
+            Toast.makeText(this, "Configuraciones próximamente", Toast.LENGTH_SHORT).show();
+        });
 
+        // Configurar consejos médicos
+        RecyclerView rvConsejos = findViewById(R.id.rvConsejos);
+        rvConsejos.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        rvConsejos.setAdapter(new ConsejosAdapter(getEjemploConsejos()));
+
+        // Configurar citas médicas
+        RecyclerView rvCitas = findViewById(R.id.rvCitas);
+        rvCitas.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        rvCitas.setAdapter(new CitasAdapter(getEjemploCitas()));
+
+        // Configurar medicamentos con ViewPager2
+        viewPagerMedicamentos = findViewById(R.id.viewPagerMedicamentos);
         findViewById(R.id.btnAgregarMedicamento).setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, MedicamentoFormActivity.class);
             startActivityForResult(intent, REQUEST_CODE_ADD_MEDICAMENTO);
         });
-
         cargarMedicamentos();
+
+        // Configuración del menú inferior
+        configurarMenuInferior();
     }
 
     private void createNotificationChannel() {
@@ -63,20 +83,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private List<List<Medicamento>> agruparMedicamentos(List<Medicamento> medicamentos) {
+        List<List<Medicamento>> grupos = new ArrayList<>();
+
+        // Recorremos la lista de medicamentos en pasos de 2
+        for (int i = 0; i < medicamentos.size(); i += 2) {
+            // Si quedan al menos 2 medicamentos, agruparlos juntos
+            if (i + 1 < medicamentos.size()) {
+                grupos.add(medicamentos.subList(i, i + 2)); // Grupo de 2
+            } else {
+                // Si solo queda 1 medicamento, agruparlo solo
+                grupos.add(medicamentos.subList(i, i + 1)); // Grupo de 1
+            }
+        }
+
+        return grupos;
+    }
+
     private void cargarMedicamentos() {
         AppDatabase db = AppDatabase.getDatabase(getApplicationContext());
         new Thread(() -> {
             List<Medicamento> medicamentos = db.medicamentoDao().obtenerTodos();
+            List<List<Medicamento>> grupos = agruparMedicamentos(medicamentos);
+
             runOnUiThread(() -> {
-                adapter = new MedicamentoAdapter(medicamentos, medicamento -> {
-                    Intent intent = new Intent(MainActivity.this, MedicamentoFormActivity.class);
-                    intent.putExtra("medicamentoId", medicamento.getId());
-                    intent.putExtra("nombre", medicamento.getNombre());
-                    intent.putExtra("dosis", medicamento.getDosis());
-                    intent.putExtra("horario", medicamento.getHorario());
-                    startActivityForResult(intent, REQUEST_CODE_EDIT_MEDICAMENTO);
-                });
-                rvMedicamentos.setAdapter(adapter);
+                MedicamentoPagerAdapter adapter = new MedicamentoPagerAdapter(grupos);
+                viewPagerMedicamentos.setAdapter(adapter);
             });
         }).start();
     }
@@ -93,15 +125,15 @@ public class MainActivity extends AppCompatActivity {
 
                 AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-                // Configurar la alarma principal para la hora exacta
+                // Configurar alarma principal
                 Intent mainIntent = new Intent(this, MedicationReminderReceiver.class);
                 mainIntent.putExtra("medicamentoId", medicamento.getId());
                 mainIntent.putExtra("nombre", medicamento.getNombre());
-                mainIntent.putExtra("esAnticipado", false); // Notificación principal
+                mainIntent.putExtra("esAnticipado", false);
 
                 PendingIntent mainPendingIntent = PendingIntent.getBroadcast(
                         this,
-                        medicamento.getId(), // ID único
+                        medicamento.getId(),
                         mainIntent,
                         PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
                 );
@@ -110,18 +142,18 @@ public class MainActivity extends AppCompatActivity {
                     alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), mainPendingIntent);
                 }
 
-                // Configurar la alarma de recordatorio 2 minutos antes
+                // Configurar recordatorio 2 minutos antes
                 Calendar reminderCalendar = (Calendar) calendar.clone();
                 reminderCalendar.add(Calendar.MINUTE, -2);
 
                 Intent reminderIntent = new Intent(this, MedicationReminderReceiver.class);
                 reminderIntent.putExtra("medicamentoId", medicamento.getId());
                 reminderIntent.putExtra("nombre", medicamento.getNombre());
-                reminderIntent.putExtra("esAnticipado", true); // Notificación anticipada
+                reminderIntent.putExtra("esAnticipado", true);
 
                 PendingIntent reminderPendingIntent = PendingIntent.getBroadcast(
                         this,
-                        medicamento.getId() * 1000, // ID único para la anticipada
+                        medicamento.getId() * 1000,
                         reminderIntent,
                         PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
                 );
@@ -136,15 +168,45 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private List<String> getEjemploConsejos() {
+        return Arrays.asList(
+                "Mantén una dieta equilibrada.",
+                "Haz ejercicio regularmente.",
+                "Consulta al médico periódicamente."
+        );
+    }
+
+    private List<String> getEjemploCitas() {
+        return Arrays.asList(
+                "Dr. Pérez - 20/11/2024 - Revisión General",
+                "Dra. Gómez - 25/11/2024 - Cardiología"
+        );
+    }
+
+    private void configurarMenuInferior() {
+        BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigation);
+        bottomNavigation.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_home) {
+                Toast.makeText(this, "Inicio", Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.nav_medicamentos) {
+                Toast.makeText(this, "Medicamentos", Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.nav_citas) {
+                Toast.makeText(this, "Citas Médicas", Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        });
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && (requestCode == REQUEST_CODE_ADD_MEDICAMENTO || requestCode == REQUEST_CODE_EDIT_MEDICAMENTO)) {
-            cargarMedicamentos(); // Recargar la lista de medicamentos después de agregar o editar
+            cargarMedicamentos();
             if (data != null && data.hasExtra("medicamento")) {
                 Medicamento medicamento = (Medicamento) data.getSerializableExtra("medicamento");
                 if (medicamento != null) {
-                    setReminderAlarm(medicamento); // Configurar la alarma solo después de editar o agregar
+                    setReminderAlarm(medicamento);
                 }
             }
         }

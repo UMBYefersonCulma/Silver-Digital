@@ -24,7 +24,8 @@
         android:layout_height="wrap_content"
         android:hint="Horario (ej. 08:00 AM)"
         android:focusable="false"
-        android:clickable="true" />
+        android:clickable="true"
+        android:inputType="time"/>
 
     <Button
         android:id="@+id/btnGuardar"
