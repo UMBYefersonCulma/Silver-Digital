@@ -22,7 +22,7 @@ import java.util.Locale;
 
 public class MedicamentoFormActivity extends AppCompatActivity {
 
-    private EditText etNombre, etDosis, etHorario;
+    private EditText etNombre, etDosis, etHorario, etObservaciones;
     private Button btnGuardar;
     private int medicamentoId = -1;
 
@@ -35,6 +35,7 @@ public class MedicamentoFormActivity extends AppCompatActivity {
         etNombre = findViewById(R.id.etNombre);
         etDosis = findViewById(R.id.etDosis);
         etHorario = findViewById(R.id.etHorario);
+        etObservaciones = findViewById(R.id.etObservaciones);
         btnGuardar = findViewById(R.id.btnGuardar);
 
         // Verificar si estamos editando un medicamento existente
@@ -44,11 +45,13 @@ public class MedicamentoFormActivity extends AppCompatActivity {
             String nombre = intent.getStringExtra("nombre");
             String dosis = intent.getStringExtra("dosis");
             String horario = intent.getStringExtra("horario");
+            String observaciones = intent.getStringExtra("observaciones");
 
             // Mostrar los datos en los campos de edición
             etNombre.setText(nombre);
             etDosis.setText(dosis);
             etHorario.setText(horario);
+            etObservaciones.setText(observaciones);
         }
 
         btnGuardar.setOnClickListener(v -> guardarMedicamento());
@@ -81,8 +84,9 @@ public class MedicamentoFormActivity extends AppCompatActivity {
         String nombre = etNombre.getText().toString().trim();
         String dosis = etDosis.getText().toString().trim();
         String horario = etHorario.getText().toString().trim();
+        String observaciones = etObservaciones.getText().toString().trim();
 
-        if (nombre.isEmpty() || dosis.isEmpty() || horario.isEmpty()) {
+        if (nombre.isEmpty() || dosis.isEmpty() || horario.isEmpty() || observaciones.isEmpty()) {
             Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -97,6 +101,7 @@ public class MedicamentoFormActivity extends AppCompatActivity {
                 medicamento.setNombre(nombre);
                 medicamento.setDosis(dosis);
                 medicamento.setHorario(horario);
+                medicamento.setObservaciones(observaciones);
                 db.medicamentoDao().insertar(medicamento);
             } else {
                 // Editar un medicamento existente
@@ -104,6 +109,7 @@ public class MedicamentoFormActivity extends AppCompatActivity {
                 medicamento.setNombre(nombre);
                 medicamento.setDosis(dosis);
                 medicamento.setHorario(horario);
+                medicamento.setObservaciones(observaciones);
                 db.medicamentoDao().actualizar(medicamento);
             }
 
@@ -112,6 +118,7 @@ public class MedicamentoFormActivity extends AppCompatActivity {
 
             runOnUiThread(() -> {
                 Toast.makeText(this, "Medicamento guardado", Toast.LENGTH_SHORT).show();
+                setResult(RESULT_OK);
                 restartApp(); // Reiniciar la aplicación
             });
         }).start();

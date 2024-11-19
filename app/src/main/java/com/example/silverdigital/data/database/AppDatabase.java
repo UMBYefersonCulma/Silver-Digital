@@ -6,7 +6,7 @@ import androidx.room.RoomDatabase;
 import android.content.Context;
 import com.example.silverdigital.data.model.Medicamento;
 
-@Database(entities = {Medicamento.class}, version = 1)
+@Database(entities = {Medicamento.class}, version = 2) // Incrementa la versión
 public abstract class AppDatabase extends RoomDatabase {
     public abstract MedicamentoDao medicamentoDao();
 
@@ -18,6 +18,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     AppDatabase.class, "medicamentos_db")
+                            .fallbackToDestructiveMigration() // Elimina los datos si el esquema cambia
                             .build();
                 }
             }

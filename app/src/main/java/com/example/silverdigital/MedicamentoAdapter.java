@@ -51,12 +51,14 @@ public class MedicamentoAdapter extends RecyclerView.Adapter<MedicamentoAdapter.
         private final TextView tvNombre;
         private final TextView tvDosis;
         private final TextView tvHorario;
+        private final TextView tvObservaciones; // Añadido para mostrar observaciones
 
         public MedicamentoViewHolder(@NonNull View itemView) {
             super(itemView);
             tvNombre = itemView.findViewById(R.id.tvNombre);
             tvDosis = itemView.findViewById(R.id.tvDosis);
             tvHorario = itemView.findViewById(R.id.tvHorario);
+            tvObservaciones = itemView.findViewById(R.id.tvObservaciones); // Asociar el nuevo campo
 
             // Configurar el click listener para cada ítem
             itemView.setOnClickListener(v -> {
@@ -71,6 +73,7 @@ public class MedicamentoAdapter extends RecyclerView.Adapter<MedicamentoAdapter.
             tvNombre.setText(medicamento.getNombre() != null ? medicamento.getNombre() : "Nombre no disponible");
             tvDosis.setText(medicamento.getDosis() != null ? "Dosis: " + medicamento.getDosis() : "Dosis no disponible");
             tvHorario.setText(medicamento.getHorario() != null ? "Horario: " + medicamento.getHorario() : "Horario no disponible");
+            tvObservaciones.setText(medicamento.getObservaciones() != null ? "Observaciones: "+ medicamento.getObservaciones(): "Observaciones no disponibles");
         }
     }
 

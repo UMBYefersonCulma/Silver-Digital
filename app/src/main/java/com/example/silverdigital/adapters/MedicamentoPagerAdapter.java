@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.silverdigital.MedicamentoFormActivity; // Asegúrate de usar la actividad correcta
+import com.example.silverdigital.MedicamentoFormActivity;
 import com.example.silverdigital.R;
 import com.example.silverdigital.data.model.Medicamento;
 import java.util.List;
@@ -36,13 +36,13 @@ public class MedicamentoPagerAdapter extends RecyclerView.Adapter<MedicamentoPag
 
         // Mostrar y configurar Medicamento 1 (siempre está presente)
         Medicamento medicamento1 = grupo.get(0);
-        setMedicamentoData(holder.tvNombreMedicamento1, holder.tvDosisMedicamento1, holder.tvHorarioMedicamento1, medicamento1);
+        setMedicamentoData(holder.tvNombreMedicamento1, holder.tvDosisMedicamento1, holder.tvHorarioMedicamento1, holder.tvDosisMedicamento1,medicamento1);
         setOnClickListener(holder.itemView, context, medicamento1);
 
         // Mostrar y configurar Medicamento 2 (si existe)
         if (grupo.size() > 1) {
             Medicamento medicamento2 = grupo.get(1);
-            setMedicamentoData(holder.tvNombreMedicamento2, holder.tvDosisMedicamento2, holder.tvHorarioMedicamento2, medicamento2);
+            setMedicamentoData(holder.tvNombreMedicamento2, holder.tvDosisMedicamento2, holder.tvHorarioMedicamento2, holder.tvDosisMedicamento2,medicamento2);
             holder.linearLayoutMedicamento2.setVisibility(View.VISIBLE);
             setOnClickListener(holder.linearLayoutMedicamento2, context, medicamento2);
         } else {
@@ -67,10 +67,11 @@ public class MedicamentoPagerAdapter extends RecyclerView.Adapter<MedicamentoPag
     /**
      * Configurar los datos del medicamento en las vistas
      */
-    private void setMedicamentoData(TextView tvNombre, TextView tvDosis, TextView tvHorario, Medicamento medicamento) {
+    private void setMedicamentoData(TextView tvNombre, TextView tvDosis, TextView tvHorario, TextView tvObservaciones, Medicamento medicamento) {
         tvNombre.setText(medicamento.getNombre() != null ? medicamento.getNombre() : "Nombre no disponible");
         tvDosis.setText(medicamento.getDosis() != null ? "Dosis: " + medicamento.getDosis() : "Dosis no disponible");
         tvHorario.setText(medicamento.getHorario() != null ? "Horario: " + medicamento.getHorario() : "Horario no disponible");
+        tvObservaciones.setText(medicamento.getObservaciones() != null ? "Observaciones: " + medicamento.getObservaciones() : "Observaciones no disponibles");
     }
 
     /**
@@ -83,6 +84,7 @@ public class MedicamentoPagerAdapter extends RecyclerView.Adapter<MedicamentoPag
             intent.putExtra("nombre", medicamento.getNombre());
             intent.putExtra("dosis", medicamento.getDosis());
             intent.putExtra("horario", medicamento.getHorario());
+            intent.putExtra("observaciones", medicamento.getObservaciones());
             context.startActivity(intent);
         });
     }
@@ -92,10 +94,10 @@ public class MedicamentoPagerAdapter extends RecyclerView.Adapter<MedicamentoPag
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // Vistas para el primer medicamento
-        TextView tvNombreMedicamento1, tvDosisMedicamento1, tvHorarioMedicamento1;
+        TextView tvNombreMedicamento1, tvDosisMedicamento1, tvHorarioMedicamento1 ,tvObservaciones1;
 
         // Vistas para el segundo medicamento
-        TextView tvNombreMedicamento2, tvDosisMedicamento2, tvHorarioMedicamento2;
+        TextView tvNombreMedicamento2, tvDosisMedicamento2, tvHorarioMedicamento2 ,tvObservaciones2;
         View linearLayoutMedicamento2; // Contenedor para el segundo medicamento
 
         public ViewHolder(@NonNull View itemView) {
@@ -105,11 +107,13 @@ public class MedicamentoPagerAdapter extends RecyclerView.Adapter<MedicamentoPag
             tvNombreMedicamento1 = itemView.findViewById(R.id.tvNombreMedicamento1);
             tvDosisMedicamento1 = itemView.findViewById(R.id.tvDosisMedicamento1);
             tvHorarioMedicamento1 = itemView.findViewById(R.id.tvHorarioMedicamento1);
+            tvObservaciones1 = itemView.findViewById(R.id.tvObservaciones1);
 
             // Asociar vistas del segundo medicamento
             tvNombreMedicamento2 = itemView.findViewById(R.id.tvNombreMedicamento2);
             tvDosisMedicamento2 = itemView.findViewById(R.id.tvDosisMedicamento2);
             tvHorarioMedicamento2 = itemView.findViewById(R.id.tvHorarioMedicamento2);
+            tvObservaciones2 = itemView.findViewById(R.id.tvObservaciones2);
             linearLayoutMedicamento2 = itemView.findViewById(R.id.linearLayoutMedicamento2);
         }
     }

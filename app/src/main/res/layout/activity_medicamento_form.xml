@@ -27,6 +27,15 @@
         android:clickable="true"
         android:inputType="time"/>
 
+    <EditText
+        android:id="@+id/etObservaciones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Observaciones"
+        android:inputType="textMultiLine"
+        android:minLines="3"
+        android:padding="8dp" />
+
     <Button
         android:id="@+id/btnGuardar"
         android:layout_width="match_parent"

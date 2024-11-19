@@ -41,6 +41,14 @@
             android:text="Horario: 15:53"
             android:textSize="16sp"
             android:textColor="@color/gray" />
+
+        <TextView
+            android:id="@+id/tvObservaciones1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:visibility="gone"
+            android:text="Observaciones" />
     </LinearLayout>
 
     <!-- Medicamento 2 -->
@@ -77,5 +85,13 @@
             android:text="Horario: 17:00"
             android:textSize="16sp"
             android:textColor="@color/gray" />
+
+        <TextView
+            android:id="@+id/tvObservaciones2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:visibility="gone"
+            android:text="Observaciones" />
     </LinearLayout>
 </LinearLayout>

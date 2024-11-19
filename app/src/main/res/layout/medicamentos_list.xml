@@ -35,4 +35,14 @@
         android:layout_height="wrap_content"
         android:text="Horario"
         android:textColor="@color/secondary_text"/>
+
+    <TextView
+        android:id="@+id/tvObservaciones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:textColor="#000000"
+        android:padding="4dp"
+        android:textSize="14sp"
+        android:text="Observaciones" />
 </LinearLayout>

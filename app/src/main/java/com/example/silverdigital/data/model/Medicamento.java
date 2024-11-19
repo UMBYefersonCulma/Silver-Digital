@@ -10,6 +10,7 @@ public class Medicamento {
     private String nombre;
     private String dosis;
     private String horario;
+    private String observaciones;
 
     // Getters y setters
     public int getId() { return id; }
@@ -20,4 +21,7 @@ public class Medicamento {
     public void setDosis(String dosis) { this.dosis = dosis; }
     public String getHorario() { return horario; }
     public void setHorario(String horario) { this.horario = horario; }
+    public String getObservaciones() { return observaciones; }
+    public void setObservaciones(String observaciones) { this.observaciones = observaciones; }
+
 }
