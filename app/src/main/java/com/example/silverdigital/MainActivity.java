@@ -1,10 +1,8 @@
 package com.example.silverdigital;
 
 import android.annotation.SuppressLint;
-import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,21 +18,16 @@ import com.example.silverdigital.adapters.MedicamentoPagerAdapter;
 import com.example.silverdigital.data.database.AppDatabase;
 import com.example.silverdigital.data.model.Medicamento;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
     private ViewPager2 viewPagerMedicamentos;
+    private MedicamentoPagerAdapter medicamentoAdapter;
     private static final String CHANNEL_ID = "medication_reminder_channel";
     private static final int REQUEST_CODE_ADD_MEDICAMENTO = 1;
-    private static final int REQUEST_CODE_EDIT_MEDICAMENTO = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,34 +35,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         createNotificationChannel();
-
-        // Configuración del botón de configuraciones
-        findViewById(R.id.btnSettings).setOnClickListener(v -> {
-            Toast.makeText(this, "Configuraciones próximamente", Toast.LENGTH_SHORT).show();
-        });
-
-        // Configurar consejos médicos
-        RecyclerView rvConsejos = findViewById(R.id.rvConsejos);
-        rvConsejos.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rvConsejos.setAdapter(new ConsejosAdapter(getEjemploConsejos()));
-
-        // Configurar citas médicas
-        RecyclerView rvCitas = findViewById(R.id.rvCitas);
-        rvCitas.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rvCitas.setAdapter(new CitasAdapter(getEjemploCitas()));
-
-        // Configurar medicamentos con ViewPager2
-        viewPagerMedicamentos = findViewById(R.id.viewPagerMedicamentos);
-        findViewById(R.id.btnAgregarMedicamento).setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, MedicamentoFormActivity.class);
-            startActivityForResult(intent, REQUEST_CODE_ADD_MEDICAMENTO);
-        });
-        cargarMedicamentos();
-
-        // Configuración del menú inferior
+        configurarBotonConfiguraciones();
+        configurarConsejosMedicos();
+        configurarCitasMedicas();
+        configurarMedicamentos();
         configurarMenuInferior();
     }
 
+    /**
+     * Crear el canal de notificaciones para recordatorios.
+     */
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
@@ -83,106 +58,84 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private List<List<Medicamento>> agruparMedicamentos(List<Medicamento> medicamentos) {
-        List<List<Medicamento>> grupos = new ArrayList<>();
-
-        // Recorremos la lista de medicamentos en pasos de 2
-        for (int i = 0; i < medicamentos.size(); i += 2) {
-            // Si quedan al menos 2 medicamentos, agruparlos juntos
-            if (i + 1 < medicamentos.size()) {
-                grupos.add(medicamentos.subList(i, i + 2)); // Grupo de 2
-            } else {
-                // Si solo queda 1 medicamento, agruparlo solo
-                grupos.add(medicamentos.subList(i, i + 1)); // Grupo de 1
-            }
-        }
-
-        return grupos;
+    /**
+     * Configura el botón de configuraciones.
+     */
+    private void configurarBotonConfiguraciones() {
+        findViewById(R.id.btnSettings).setOnClickListener(v ->
+                Toast.makeText(this, "Configuraciones próximamente", Toast.LENGTH_SHORT).show()
+        );
     }
 
+    /**
+     * Configura el RecyclerView para mostrar consejos médicos.
+     */
+    private void configurarConsejosMedicos() {
+        RecyclerView rvConsejos = findViewById(R.id.rvConsejos);
+        rvConsejos.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        rvConsejos.setAdapter(new ConsejosAdapter(getEjemploConsejos()));
+    }
+
+    /**
+     * Configura el RecyclerView para mostrar citas médicas.
+     */
+    private void configurarCitasMedicas() {
+        RecyclerView rvCitas = findViewById(R.id.rvCitas);
+        rvCitas.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        rvCitas.setAdapter(new CitasAdapter(getEjemploCitas()));
+    }
+
+    /**
+     * Configura el ViewPager2 para mostrar los medicamentos.
+     */
+    private void configurarMedicamentos() {
+        viewPagerMedicamentos = findViewById(R.id.viewPagerMedicamentos);
+
+        findViewById(R.id.btnAgregarMedicamento).setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, MedicamentoFormActivity.class);
+            startActivityForResult(intent, REQUEST_CODE_ADD_MEDICAMENTO);
+        });
+
+        medicamentoAdapter = new MedicamentoPagerAdapter(new ArrayList<>());
+        viewPagerMedicamentos.setAdapter(medicamentoAdapter);
+        cargarMedicamentos();
+    }
+
+    /**
+     * Cargar medicamentos desde la base de datos y actualizar el adaptador.
+     */
     private void cargarMedicamentos() {
-        AppDatabase db = AppDatabase.getDatabase(getApplicationContext());
         new Thread(() -> {
+            AppDatabase db = AppDatabase.getDatabase(getApplicationContext());
             List<Medicamento> medicamentos = db.medicamentoDao().obtenerTodos();
+
             List<List<Medicamento>> grupos = agruparMedicamentos(medicamentos);
 
             runOnUiThread(() -> {
-                MedicamentoPagerAdapter adapter = new MedicamentoPagerAdapter(grupos);
-                viewPagerMedicamentos.setAdapter(adapter);
+                if (medicamentoAdapter == null) {
+                    medicamentoAdapter = new MedicamentoPagerAdapter(grupos);
+                    viewPagerMedicamentos.setAdapter(medicamentoAdapter);
+                } else {
+                    medicamentoAdapter.updateData(grupos); // Actualizar el adaptador
+                }
             });
         }).start();
     }
 
-    @SuppressLint("ScheduleExactAlarm")
-    private void setReminderAlarm(Medicamento medicamento) {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
-        try {
-            Date date = sdf.parse(medicamento.getHorario());
-            Calendar calendar = Calendar.getInstance();
-            if (date != null) {
-                calendar.setTime(date);
-                calendar.set(Calendar.SECOND, 0);
-
-                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-                // Configurar alarma principal
-                Intent mainIntent = new Intent(this, MedicationReminderReceiver.class);
-                mainIntent.putExtra("medicamentoId", medicamento.getId());
-                mainIntent.putExtra("nombre", medicamento.getNombre());
-                mainIntent.putExtra("esAnticipado", false);
-
-                PendingIntent mainPendingIntent = PendingIntent.getBroadcast(
-                        this,
-                        medicamento.getId(),
-                        mainIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-                );
-
-                if (alarmManager != null) {
-                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), mainPendingIntent);
-                }
-
-                // Configurar recordatorio 2 minutos antes
-                Calendar reminderCalendar = (Calendar) calendar.clone();
-                reminderCalendar.add(Calendar.MINUTE, -2);
-
-                Intent reminderIntent = new Intent(this, MedicationReminderReceiver.class);
-                reminderIntent.putExtra("medicamentoId", medicamento.getId());
-                reminderIntent.putExtra("nombre", medicamento.getNombre());
-                reminderIntent.putExtra("esAnticipado", true);
-
-                PendingIntent reminderPendingIntent = PendingIntent.getBroadcast(
-                        this,
-                        medicamento.getId() * 1000,
-                        reminderIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-                );
-
-                if (alarmManager != null) {
-                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, reminderCalendar.getTimeInMillis(), reminderPendingIntent);
-                }
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Formato de hora incorrecto.", Toast.LENGTH_SHORT).show();
+    /**
+     * Agrupar medicamentos en grupos de 2 para mostrar en el ViewPager2.
+     */
+    private List<List<Medicamento>> agruparMedicamentos(List<Medicamento> medicamentos) {
+        List<List<Medicamento>> grupos = new ArrayList<>();
+        for (int i = 0; i < medicamentos.size(); i += 2) {
+            grupos.add(medicamentos.subList(i, Math.min(i + 2, medicamentos.size())));
         }
+        return grupos;
     }
 
-    private List<String> getEjemploConsejos() {
-        return Arrays.asList(
-                "Mantén una dieta equilibrada.",
-                "Haz ejercicio regularmente.",
-                "Consulta al médico periódicamente."
-        );
-    }
-
-    private List<String> getEjemploCitas() {
-        return Arrays.asList(
-                "Dr. Pérez - 20/11/2024 - Revisión General",
-                "Dra. Gómez - 25/11/2024 - Cardiología"
-        );
-    }
-
+    /**
+     * Configurar el menú inferior (BottomNavigationView).
+     */
     private void configurarMenuInferior() {
         BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigation);
         bottomNavigation.setOnItemSelectedListener(item -> {
@@ -198,17 +151,35 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Obtener ejemplos de consejos médicos.
+     */
+    private List<String> getEjemploConsejos() {
+        return Arrays.asList(
+                "Mantén una dieta equilibrada.",
+                "Haz ejercicio regularmente.",
+                "Consulta al médico periódicamente."
+        );
+    }
+
+    /**
+     * Obtener ejemplos de citas médicas.
+     */
+    private List<String> getEjemploCitas() {
+        return Arrays.asList(
+                "Dr. Pérez - 20/11/2024 - Revisión General",
+                "Dra. Gómez - 25/11/2024 - Cardiología"
+        );
+    }
+
+    /**
+     * Manejar resultados de actividades.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && (requestCode == REQUEST_CODE_ADD_MEDICAMENTO || requestCode == REQUEST_CODE_EDIT_MEDICAMENTO)) {
-            cargarMedicamentos();
-            if (data != null && data.hasExtra("medicamento")) {
-                Medicamento medicamento = (Medicamento) data.getSerializableExtra("medicamento");
-                if (medicamento != null) {
-                    setReminderAlarm(medicamento);
-                }
-            }
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_ADD_MEDICAMENTO) {
+            cargarMedicamentos(); // Recargar los medicamentos después de agregar o editar
         }
     }
 }

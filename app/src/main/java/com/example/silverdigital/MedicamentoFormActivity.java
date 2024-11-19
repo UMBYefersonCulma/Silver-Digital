@@ -107,16 +107,24 @@ public class MedicamentoFormActivity extends AppCompatActivity {
                 db.medicamentoDao().actualizar(medicamento);
             }
 
+            programarRecordatorio(medicamento);
+
+
             runOnUiThread(() -> {
                 Toast.makeText(this, "Medicamento guardado", Toast.LENGTH_SHORT).show();
-                setResult(RESULT_OK);
-
-                // Programar recordatorio para el medicamento
-                programarRecordatorio(medicamento);
-
-                finish();
+                restartApp(); // Reiniciar la aplicación
             });
         }).start();
+    }
+
+    /**
+     * Reinicia la aplicación cargando la actividad principal nuevamente.
+     */
+    private void restartApp() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish(); // Cerrar la actividad actual
     }
 
     @SuppressLint("ScheduleExactAlarm")

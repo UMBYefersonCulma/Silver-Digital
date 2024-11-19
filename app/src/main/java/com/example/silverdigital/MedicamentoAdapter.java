@@ -7,16 +7,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.silverdigital.data.model.Medicamento;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MedicamentoAdapter extends RecyclerView.Adapter<MedicamentoAdapter.MedicamentoViewHolder> {
 
-    private List<Medicamento> medicamentos;
-    private OnMedicamentoClickListener listener;
+    private List<Medicamento> medicamentos = new ArrayList<>();
+    private final OnMedicamentoClickListener listener;
 
     // Constructor
-    public MedicamentoAdapter(List<Medicamento> medicamentos, OnMedicamentoClickListener listener) {
-        this.medicamentos = medicamentos;
+    public MedicamentoAdapter(OnMedicamentoClickListener listener) {
         this.listener = listener;
     }
 
@@ -38,12 +38,19 @@ public class MedicamentoAdapter extends RecyclerView.Adapter<MedicamentoAdapter.
         return medicamentos.size();
     }
 
+    // Método para actualizar los datos del adaptador
+    public void updateData(List<Medicamento> nuevosMedicamentos) {
+        medicamentos.clear();
+        medicamentos.addAll(nuevosMedicamentos);
+        notifyDataSetChanged(); // Notificar al adaptador que los datos han cambiado
+    }
+
     // ViewHolder class
     public class MedicamentoViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvNombre;
-        private TextView tvDosis;
-        private TextView tvHorario;
+        private final TextView tvNombre;
+        private final TextView tvDosis;
+        private final TextView tvHorario;
 
         public MedicamentoViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -51,6 +58,7 @@ public class MedicamentoAdapter extends RecyclerView.Adapter<MedicamentoAdapter.
             tvDosis = itemView.findViewById(R.id.tvDosis);
             tvHorario = itemView.findViewById(R.id.tvHorario);
 
+            // Configurar el click listener para cada ítem
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION && listener != null) {
@@ -60,9 +68,9 @@ public class MedicamentoAdapter extends RecyclerView.Adapter<MedicamentoAdapter.
         }
 
         public void bind(Medicamento medicamento) {
-            tvNombre.setText(medicamento.getNombre());
-            tvDosis.setText("Dosis: " + medicamento.getDosis());
-            tvHorario.setText("Horario: " + medicamento.getHorario());
+            tvNombre.setText(medicamento.getNombre() != null ? medicamento.getNombre() : "Nombre no disponible");
+            tvDosis.setText(medicamento.getDosis() != null ? "Dosis: " + medicamento.getDosis() : "Dosis no disponible");
+            tvHorario.setText(medicamento.getHorario() != null ? "Horario: " + medicamento.getHorario() : "Horario no disponible");
         }
     }
 
