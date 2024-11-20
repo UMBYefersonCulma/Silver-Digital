@@ -12,18 +12,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Botón de Configuraciones -->
-        <Button
-            android:id="@+id/btnSettings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Configuraciones"
-            android:textAllCaps="true"
-            android:layout_gravity="end"
-            android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/button_primary"
-            android:textColor="@android:color/white" />
-
         <!-- Título de la aplicación -->
         <TextView
             android:id="@+id/tvAppTitle"
@@ -54,16 +42,16 @@
             android:layout_marginBottom="16dp" />
 
         <!-- Botón de Ver Más Consejos -->
-<!--        <Button-->
-<!--            android:id="@+id/btnVerMasConsejos"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="VER MÁS CONSEJOS"-->
-<!--            android:textAllCaps="true"-->
-<!--            android:backgroundTint="@color/button_primary"-->
-<!--            android:textColor="@android:color/white"-->
-<!--            android:layout_gravity="center_horizontal"-->
-<!--            android:layout_marginBottom="24dp" />-->
+        <Button
+            android:id="@+id/btnVerMasConsejos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VER MÁS CONSEJOS"
+            android:textAllCaps="true"
+            android:backgroundTint="@color/button_primary"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="15dp" />
 
         <!-- RecyclerView de Próximas Citas -->
         <TextView

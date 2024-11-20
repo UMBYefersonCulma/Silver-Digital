@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         createNotificationChannel();
-        configurarBotonConfiguraciones();
         configurarConsejosMedicos();
         configurarCitasMedicas();
         configurarMedicamentos();
@@ -58,15 +57,6 @@ public class MainActivity extends AppCompatActivity {
                 notificationManager.createNotificationChannel(channel);
             }
         }
-    }
-
-    /**
-     * Configura el botón de configuraciones.
-     */
-    private void configurarBotonConfiguraciones() {
-        findViewById(R.id.btnSettings).setOnClickListener(v ->
-                Toast.makeText(this, "Configuraciones próximamente", Toast.LENGTH_SHORT).show()
-        );
     }
 
     /**

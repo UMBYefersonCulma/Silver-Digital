@@ -47,27 +47,36 @@ public class MedicamentoPagerAdapter extends RecyclerView.Adapter<MedicamentoPag
         List<Medicamento> grupo = gruposMedicamentos.get(position);
         Context context = holder.itemView.getContext();
 
-        if (grupo == null || grupo.isEmpty()) {
-            Log.e("MedicamentoPagerAdapter", "El grupo de medicamentos está vacío o es nulo.");
-            return;
-        }
-
         // Configurar Medicamento 1
         Medicamento medicamento1 = grupo.get(0);
         setMedicamentoData(holder.tvNombreMedicamento1, holder.tvDosisMedicamento1, holder.tvHorarioMedicamento1, holder.tvObservaciones1, medicamento1);
-        setOnClickListener(holder.itemView, context, medicamento1);
+
+        holder.linearLayoutMedicamento1.setOnClickListener(v -> {
+            abrirMenuEdicion(context, medicamento1);
+        });
 
         // Configurar Medicamento 2 (si existe)
         if (grupo.size() > 1) {
             Medicamento medicamento2 = grupo.get(1);
             setMedicamentoData(holder.tvNombreMedicamento2, holder.tvDosisMedicamento2, holder.tvHorarioMedicamento2, holder.tvObservaciones2, medicamento2);
-            if (holder.linearLayoutMedicamento2 != null) {
-                holder.linearLayoutMedicamento2.setVisibility(View.VISIBLE);
-                setOnClickListener(holder.linearLayoutMedicamento2, context, medicamento2);
-            }
-        } else if (holder.linearLayoutMedicamento2 != null) {
+
+            holder.linearLayoutMedicamento2.setVisibility(View.VISIBLE);
+            holder.linearLayoutMedicamento2.setOnClickListener(v -> {
+                abrirMenuEdicion(context, medicamento2);
+            });
+        } else {
             holder.linearLayoutMedicamento2.setVisibility(View.GONE);
         }
+    }
+
+    private void abrirMenuEdicion(Context context, Medicamento medicamento) {
+        Intent intent = new Intent(context, MedicamentoFormActivity.class);
+        intent.putExtra("medicamentoId", medicamento.getId());
+        intent.putExtra("nombre", medicamento.getNombre());
+        intent.putExtra("dosis", medicamento.getDosis());
+        intent.putExtra("horario", medicamento.getHorario());
+        intent.putExtra("observaciones", medicamento.getObservaciones());
+        context.startActivity(intent);
     }
 
     @Override
@@ -166,7 +175,7 @@ public class MedicamentoPagerAdapter extends RecyclerView.Adapter<MedicamentoPag
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvNombreMedicamento1, tvDosisMedicamento1, tvHorarioMedicamento1, tvObservaciones1;
         TextView tvNombreMedicamento2, tvDosisMedicamento2, tvHorarioMedicamento2, tvObservaciones2;
-        View linearLayoutMedicamento2;
+        View linearLayoutMedicamento1,linearLayoutMedicamento2;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -175,6 +184,7 @@ public class MedicamentoPagerAdapter extends RecyclerView.Adapter<MedicamentoPag
             tvDosisMedicamento1 = itemView.findViewById(R.id.tvDosisMedicamento1);
             tvHorarioMedicamento1 = itemView.findViewById(R.id.tvHorarioMedicamento1);
             tvObservaciones1 = itemView.findViewById(R.id.tvObservaciones1);
+            linearLayoutMedicamento1 = itemView.findViewById(R.id.linearLayoutMedicamento1);
 
             tvNombreMedicamento2 = itemView.findViewById(R.id.tvNombreMedicamento2);
             tvDosisMedicamento2 = itemView.findViewById(R.id.tvDosisMedicamento2);
