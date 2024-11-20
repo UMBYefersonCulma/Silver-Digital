@@ -54,7 +54,9 @@ public class MainActivity extends AppCompatActivity {
             );
             channel.setDescription("Canal para los recordatorios de medicamentos");
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
         }
     }
 
@@ -89,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
      * Configura el ViewPager2 para mostrar los medicamentos.
      */
     private void configurarMedicamentos() {
-        viewPagerMedicamentos = findViewById(R.id.viewPagerMedicamentos);
+        viewPagerMedicamentos = findViewById(R.id.viewPager);
 
         findViewById(R.id.btnAgregarMedicamento).setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, MedicamentoFormActivity.class);

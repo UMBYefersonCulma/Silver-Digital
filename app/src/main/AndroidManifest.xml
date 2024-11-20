@@ -19,7 +19,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.SilverDigital">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +26,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".MedicamentoFormActivity" />
-        <receiver android:name=".MedicationReminderReceiver" />
+        <receiver android:name=".MedicationReminderReceiver"
+            android:exported="true"
+            android:permission="TODO" />
     </application>
 
 </manifest>

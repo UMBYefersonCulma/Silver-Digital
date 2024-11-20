@@ -6,4 +6,6 @@
     android:layout_height="wrap_content"
     android:padding="8dp"
     android:textSize="16sp"
-    android:textColor="@color/primary_text" />
+    android:textColor="@color/primary_text"
+    android:background="@color/background_color"
+    android:text="@string/sample_tip_text" />

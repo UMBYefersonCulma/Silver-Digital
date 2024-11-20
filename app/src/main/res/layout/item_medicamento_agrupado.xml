@@ -3,7 +3,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:background="@color/background_light">
 
     <!-- Primer grupo -->
     <LinearLayout
@@ -18,17 +19,26 @@
             android:id="@+id/tvNombre1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold" />
+            android:text="@string/medicine_name"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/primary_text" />
 
         <TextView
             android:id="@+id/tvDosis1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/medicine_dosage"
+            android:textSize="14sp"
+            android:textColor="@color/secondary_text" />
 
         <TextView
             android:id="@+id/tvHorario1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/medicine_schedule"
+            android:textSize="14sp"
+            android:textColor="@color/secondary_text" />
     </LinearLayout>
 
     <!-- Segundo grupo -->
@@ -45,16 +55,25 @@
             android:id="@+id/tvNombre2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold" />
+            android:text="@string/medicine_name"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/primary_text" />
 
         <TextView
             android:id="@+id/tvDosis2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/medicine_dosage"
+            android:textSize="14sp"
+            android:textColor="@color/secondary_text" />
 
         <TextView
             android:id="@+id/tvHorario2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/medicine_schedule"
+            android:textSize="14sp"
+            android:textColor="@color/secondary_text" />
     </LinearLayout>
 </LinearLayout>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#E0F2F1" /> <!-- Cambia a un color pastel suave -->
-    <corners android:radius="12dp"/>
-    <stroke android:width="1dp" android:color="#B0BEC5"/> <!-- Borde más sutil -->
+    <solid android:color="@color/tertiary_color" /> <!-- Fondo terciario -->
+    <corners android:radius="12dp" />
+    <stroke android:width="1dp" android:color="@color/secondary_color" /> <!-- Borde secundario -->
 </shape>

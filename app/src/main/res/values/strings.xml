@@ -1,3 +1,79 @@
 <resources>
+    <!-- App General -->
     <string name="app_name">Silver Digital</string>
+    <string name="medical_tips_header">Consejos Médicos</string>
+    <string name="add_medicine">Agregar Medicamento</string>
+    <string name="next_medicines">Próximos Medicamentos</string>
+    <string name="next_medical_appointments">Próximas Citas Médicas</string>
+    <string name="save">Guardar</string>
+    <string name="update_data">Actualizando datos...</string>
+    <string name="medicine_name_hint">Nombre del medicamento</string>
+    <string name="dose_hint">Dosis</string>
+    <string name="time_hint">Horario (ej. 08:00 AM)</string>
+    <string name="observations_hint">Observaciones</string>
+    <string name="settings">Configuraciones</string>
+    <string name="more_tips">Ver Más Consejos</string>
+    <string name="loading">Cargando...</string>
+
+    <!-- Botones -->
+    <string name="button_text_add_medicine">Agregar Medicamento</string>
+    <string name="button_text_more_tips">Ver Más Consejos</string>
+
+    <string name="sample_appointment_text">Dr. Pérez - 20/11/2024 - Revisión General</string>
+    <string name="sample_tip_text">Mantén una dieta equilibrada</string>
+
+    <!-- Medicamentos -->
+    <string name="medicine_name">Nombre del Medicamento</string>
+    <string name="medicine_dosage">Dosis</string>
+    <string name="medicine_schedule">Horario</string>
+
+    <!-- Medicamento 1 -->
+    <string name="medicine_name_1">Nombre del Medicamento 1</string>
+    <string name="medicine_dosage_1">Dosis</string>
+    <string name="medicine_schedule_1">Horario</string>
+
+    <!-- Medicamento 2 -->
+    <string name="medicine_name_2">Nombre del Medicamento 2</string>
+    <string name="medicine_dosage_2">Dosis</string>
+    <string name="medicine_schedule_2">Horario</string>
+
+    <string name="loading_message">Actualizando datos...</string>
+
+    <string name="medicamento_1">Medicamento 1</string>
+    <string name="dosis_1">Dosis: 122</string>
+    <string name="horario_1">Horario: 15:53</string>
+    <string name="observaciones_1">Observaciones</string>
+
+    <string name="medicamento_2">Medicamento 2</string>
+    <string name="dosis_2">Dosis: 200</string>
+    <string name="horario_2">Horario: 17:00</string>
+    <string name="observaciones_2">Observaciones</string>
+
+    <string name="medicamento_nombre">Nombre del Medicamento</string>
+    <string name="medicamento_dosis">Dosis: </string>
+    <string name="medicamento_horario">Horario</string>
+    <string name="medicamento_observaciones">Observaciones</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_medicamentos">Medicamentos</string>
+    <string name="menu_citas">Citas</string>
+
+    <!-- General Labels -->
+    <string name="see_more_tips">Ver Más Consejos</string>
+    <string name="upcoming_medicines_header">Próximos Medicamentos</string>
+    <string name="upcoming_medical_appointments">Próximas Citas Médicas</string>
+
+    <!-- Medicamento -->
+    <string name="medicamento_name">Nombre del Medicamento</string>
+    <string name="medicamento_dosage">Dosis</string>
+    <string name="medicamento_schedule">Horario</string>
+    <string name="medicamento_observations">Observaciones</string>
+    <string name="delete">Eliminar</string>
+    <string name="medicine_edit_title">Edición de Medicina</string>
+
+    <!-- Loading -->
+    <string name="loading_data">Actualizando datos...</string>
+
+    <!-- Errors and Warnings -->
+    <string name="error_no_data">No hay datos disponibles</string>
 </resources>

@@ -1,44 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@color/background_light">
 
-    <EditText
-        android:id="@+id/etNombre"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nombre del medicamento" />
+        android:orientation="vertical"
+        android:background="@color/background_light"
+        android:padding="16dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:gravity="center_horizontal">
 
-    <EditText
-        android:id="@+id/etDosis"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Dosis"
-        android:inputType="number" />
+        <TextView
+            android:id="@+id/tvTituloEdicion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/medicine_edit_title"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_text"
+            android:layout_marginBottom="30dp" />
 
-    <EditText
-        android:id="@+id/etHorario"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Horario (ej. 08:00 AM)"
-        android:focusable="false"
-        android:clickable="true"
-        android:inputType="time"/>
+        <!-- Campo Nombre -->
+        <EditText
+            android:id="@+id/etNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/medicine_name_hint"
+            android:background="@drawable/custom_edittext_background"
+            android:padding="12dp"
+            android:textColor="@color/primary_text"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" />
 
-    <EditText
-        android:id="@+id/etObservaciones"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Observaciones"
-        android:inputType="textMultiLine"
-        android:minLines="3"
-        android:padding="8dp" />
+        <!-- Campo Dosis -->
+        <EditText
+            android:id="@+id/etDosis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/dose_hint"
+            android:background="@drawable/custom_edittext_background"
+            android:padding="12dp"
+            android:textColor="@color/primary_text"
+            android:inputType="number"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" />
 
-    <Button
-        android:id="@+id/btnGuardar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Guardar" />
-</LinearLayout>
+        <!-- Campo Horario -->
+        <EditText
+            android:id="@+id/etHorario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/time_hint"
+            android:background="@drawable/custom_edittext_background"
+            android:padding="12dp"
+            android:textColor="@color/primary_text"
+            android:textSize="16sp"
+            android:focusable="false"
+            android:clickable="true"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Campo Observaciones -->
+        <EditText
+            android:id="@+id/etObservaciones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/observations_hint"
+            android:background="@drawable/custom_edittext_background"
+            android:padding="12dp"
+            android:textColor="@color/primary_text"
+            android:textSize="16sp"
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Botón Guardar -->
+        <Button
+            android:id="@+id/btnGuardar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/button_text"
+            android:padding="12dp"
+            android:textSize="18sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="16dp"/>
+
+        <!-- Botón Eliminar -->
+        <Button
+            android:id="@+id/btnEliminar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/delete"
+            android:background="@drawable/rounded_button_red"
+            android:textColor="@color/button_text"
+            android:padding="12dp"
+            android:textSize="18sp"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+</RelativeLayout>

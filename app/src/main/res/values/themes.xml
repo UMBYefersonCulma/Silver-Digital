@@ -2,15 +2,33 @@
 <resources>
     <!-- Tema Claro -->
     <style name="Theme.SilverDigital.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/purple_40</item>
-        <item name="colorSecondary">@color/purple_grey_40</item>
-        <item name="android:colorBackground">@color/background_light</item>
+        <!-- Colores primarios -->
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorSecondary">@color/secondary_color</item>
+        <item name="colorTertiary">@color/tertiary_color</item>
+
+        <!-- Fondo y texto -->
+        <item name="android:colorBackground">@color/background_color</item>
+        <item name="android:textColorPrimary">@color/primary_text</item>
+        <item name="android:textColorSecondary">@color/secondary_text</item>
+
+        <!-- Colores para botones -->
+        <item name="buttonStyle">@style/ButtonStyle</item>
     </style>
 
     <!-- Tema Oscuro -->
     <style name="Theme.SilverDigital.Dark" parent="Theme.MaterialComponents.NoActionBar">
-        <item name="colorPrimary">@color/purple_80</item>
-        <item name="colorSecondary">@color/purple_grey_80</item>
+        <!-- Colores primarios -->
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorSecondary">@color/secondary_color</item>
+        <item name="colorTertiary">@color/tertiary_color</item>
+
+        <!-- Fondo y texto -->
         <item name="android:colorBackground">@color/background_dark</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/gray</item>
+
+        <!-- Colores para botones -->
+        <item name="buttonStyle">@style/ButtonStyle</item>
     </style>
 </resources>

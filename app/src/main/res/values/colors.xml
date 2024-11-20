@@ -1,26 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="background_color">#FFFFFF</color>
-    <color name="primary_text">#333333</color>
-    <color name="secondary_text">#666666</color>
-    <color name="button_background">#B3FFB4</color>
-    <color name="button_text">#FFFFFF</color>
-    <color name="warning_color">#FF6F61</color>
-    <color name="accessible_green">#81C784</color>
-    <color name="accessible_red">#E57373</color>
-    <color name="primaryColor">#6200EE</color>
-    <color name="backgroundColor">#FFFFFF</color>
-    <color name="white">#FFFFFF</color>
-    <color name="purple_80">#B388FF</color>
-    <color name="purple_grey_80">#BDBDBD</color>
-    <color name="background_dark">#121212</color>
-    <color name="purple_40">#7C4DFF</color>
-    <color name="purple_grey_40">#757575</color>
-    <color name="background_light">#FFFFFF</color>
-    <color name="black">#000000</color>
-    <color name="gray">#878787</color>
 
-    <!-- Colores adicionales necesarios -->
-    <color name="buttonColor">#9EFFA2</color> <!-- Puedes elegir un color distinto si deseas -->
-    <color name="buttonTextColor">#FFFFFF</color> <!-- Color del texto en los botones -->
+<!--version 4-->
+<resources>
+    <!-- Paleta principal -->
+    <color name="primary_color">#D12222</color> <!-- Azul moderno -->
+    <color name="secondary_color">#50C878</color> <!-- Verde esmeralda -->
+    <color name="tertiary_color">#FFD700</color> <!-- Dorado brillante -->
+    <color name="quaternary_color">#34495E</color> <!-- Azul grisáceo -->
+
+    <!-- Colores de fondo y texto -->
+    <color name="background_color">#F4F9FF</color> <!-- Fondo claro azulado -->
+    <color name="background_dark">#1C2833</color> <!-- Fondo oscuro profundo -->
+    <color name="primary_text">#2C3E50</color> <!-- Texto principal -->
+    <color name="secondary_text">#5D6D7E</color> <!-- Texto secundario -->
+    <color name="button_text">#FFFFFF</color> <!-- Texto en botones -->
+
+    <!-- Colores de botones -->
+    <color name="button_background_primary">#4A90E2</color> <!-- Botón principal -->
+    <color name="button_background_secondary">#50C878</color> <!-- Botón secundario -->
+    <color name="button_background_tertiary">#FFD700</color> <!-- Botón terciario -->
+    <color name="button_background_quaternary">#34495E</color> <!-- Botón cuarto -->
+
+    <!-- Colores de accesibilidad -->
+    <color name="accessible_green">#27AE60</color> <!-- Verde accesible -->
+    <color name="accessible_red">#E74C3C</color> <!-- Rojo accesible -->
+
+    <!-- Otros colores útiles -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray">#BDC3C7</color> <!-- Gris claro -->
+    <color name="warning_color">#F39C12</color> <!-- Amarillo advertencia -->
+
+    <!-- Colores claros para fondos -->
+    <color name="background_light">#ECF0F1</color>
+    <color name="tertiary_text">#9E9E9E</color> <!-- Gris más claro -->
+    <color name="button_delete">#F44336</color>
+    <color name="button_primary">#D12222</color> <!-- Azul moderno -->
 </resources>
+
+
+<!--version 3-->
+<!--<resources>-->
+<!--    &lt;!&ndash; Paleta principal &ndash;&gt;-->
+<!--    <color name="primary_color">#444C5C</color> &lt;!&ndash; Azul grisáceo oscuro &ndash;&gt;-->
+<!--    <color name="secondary_color">#96C5B0</color> &lt;!&ndash; Verde suave &ndash;&gt;-->
+<!--    <color name="tertiary_color">#F1C232</color> &lt;!&ndash; Mostaza &ndash;&gt;-->
+<!--    <color name="quaternary_color">#D9886A</color> &lt;!&ndash; Terracota &ndash;&gt;-->
+
+<!--    &lt;!&ndash; Colores de fondo y texto &ndash;&gt;-->
+<!--    <color name="background_color">#F4F4F9</color> &lt;!&ndash; Fondo general &ndash;&gt;-->
+<!--    <color name="background_dark">#1E1E24</color> &lt;!&ndash; Fondo oscuro &ndash;&gt;-->
+<!--    <color name="primary_text">#1A1A1A</color> &lt;!&ndash; Texto principal &ndash;&gt;-->
+<!--    <color name="secondary_text">#5A5A5A</color> &lt;!&ndash; Texto secundario &ndash;&gt;-->
+<!--    <color name="button_text">#FFFFFF</color> &lt;!&ndash; Texto en los botones &ndash;&gt;-->
+
+<!--    &lt;!&ndash; Colores de botones &ndash;&gt;-->
+<!--    <color name="button_background_primary">#444C5C</color> &lt;!&ndash; Botón principal &ndash;&gt;-->
+<!--    <color name="button_background_secondary">#96C5B0</color> &lt;!&ndash; Botón secundario &ndash;&gt;-->
+<!--    <color name="button_background_tertiary">#F1C232</color> &lt;!&ndash; Botón terciario &ndash;&gt;-->
+<!--    <color name="button_background_quaternary">#D9886A</color> &lt;!&ndash; Botón cuarto &ndash;&gt;-->
+
+<!--    &lt;!&ndash; Colores de accesibilidad &ndash;&gt;-->
+<!--    <color name="accessible_green">#76D7C4</color>-->
+<!--    <color name="accessible_red">#E57373</color>-->
+
+<!--    &lt;!&ndash; Otros colores útiles &ndash;&gt;-->
+<!--    <color name="white">#FFFFFF</color>-->
+<!--    <color name="black">#000000</color>-->
+<!--    <color name="gray">#A0A0A0</color>-->
+<!--    <color name="warning_color">#FF4E4E</color>-->
+
+<!--    &lt;!&ndash; Colores claros para fondos &ndash;&gt;-->
+<!--    <color name="background_light">#F0F0F5</color>-->
+<!--</resources>-->
+
+<!--version 2 tono tierra-->
+<!--<resources>-->
+<!--    &lt;!&ndash; Paleta principal &ndash;&gt;-->
+<!--    <color name="primary_color">#8C4A43</color> &lt;!&ndash; Marrón rojizo &ndash;&gt;-->
+<!--    <color name="secondary_color">#B09A76</color> &lt;!&ndash; Beige oscuro &ndash;&gt;-->
+<!--    <color name="tertiary_color">#E0C097</color> &lt;!&ndash; Amarillo pastel &ndash;&gt;-->
+<!--    <color name="quaternary_color">#5C5B6E</color> &lt;!&ndash; Gris lavanda &ndash;&gt;-->
+
+<!--    &lt;!&ndash; Colores de fondo y texto &ndash;&gt;-->
+<!--    <color name="background_color">#FFF8F0</color> &lt;!&ndash; Fondo general cálido &ndash;&gt;-->
+<!--    <color name="background_dark">#2E2C2F</color> &lt;!&ndash; Fondo oscuro &ndash;&gt;-->
+<!--    <color name="primary_text">#4F4E4D</color> &lt;!&ndash; Texto principal &ndash;&gt;-->
+<!--    <color name="secondary_text">#7E7E7D</color> &lt;!&ndash; Texto secundario &ndash;&gt;-->
+<!--    <color name="button_text">#FFFFFF</color> &lt;!&ndash; Texto en los botones &ndash;&gt;-->
+
+<!--    &lt;!&ndash; Colores de botones &ndash;&gt;-->
+<!--    <color name="button_background_primary">#8C4A43</color> &lt;!&ndash; Botón principal &ndash;&gt;-->
+<!--    <color name="button_background_secondary">#B09A76</color> &lt;!&ndash; Botón secundario &ndash;&gt;-->
+<!--    <color name="button_background_tertiary">#E0C097</color> &lt;!&ndash; Botón terciario &ndash;&gt;-->
+<!--    <color name="button_background_quaternary">#5C5B6E</color> &lt;!&ndash; Botón cuarto &ndash;&gt;-->
+
+<!--    &lt;!&ndash; Colores de accesibilidad &ndash;&gt;-->
+<!--    <color name="accessible_green">#99A799</color>-->
+<!--    <color name="accessible_red">#C48E8E</color>-->
+
+<!--    &lt;!&ndash; Otros colores útiles &ndash;&gt;-->
+<!--    <color name="white">#FFFFFF</color>-->
+<!--    <color name="black">#000000</color>-->
+<!--    <color name="gray">#C4C4C4</color>-->
+<!--    <color name="warning_color">#FF5F57</color>-->
+
+<!--    &lt;!&ndash; Colores claros para fondos &ndash;&gt;-->
+<!--    <color name="background_light">#FAF4E7</color>-->
+<!--</resources>-->
+
+<!--version 1 rojo y verde-->
+<!--<resources>-->
+<!--    &lt;!&ndash; Paleta principal &ndash;&gt;-->
+<!--    <color name="primary_color">#C04A4A</color> &lt;!&ndash; Rojo oscuro elegante &ndash;&gt;-->
+<!--    <color name="secondary_color">#36AE7C</color> &lt;!&ndash; Verde pastel suave &ndash;&gt;-->
+<!--    <color name="tertiary_color">#F9D923</color> &lt;!&ndash; Amarillo cálido &ndash;&gt;-->
+<!--    <color name="quaternary_color">#5D7290</color> &lt;!&ndash; Azul grisáceo complementario &ndash;&gt;-->
+<!--    -->
+<!--    &lt;!&ndash; Colores de fondo y texto &ndash;&gt;-->
+<!--    <color name="background_color">#FAFAFA</color> &lt;!&ndash; Fondo general (casi blanco) &ndash;&gt;-->
+<!--    <color name="background_dark">#212121</color> &lt;!&ndash; Fondo oscuro &ndash;&gt;-->
+<!--    <color name="primary_text">#333333</color> &lt;!&ndash; Texto principal (gris oscuro) &ndash;&gt;-->
+<!--    <color name="secondary_text">#666666</color> &lt;!&ndash; Texto secundario &ndash;&gt;-->
+<!--    <color name="button_text">#FFFFFF</color> &lt;!&ndash; Texto en los botones &ndash;&gt;-->
+
+<!--    &lt;!&ndash; Colores de botones &ndash;&gt;-->
+<!--    <color name="button_background_primary">#C04A4A</color> &lt;!&ndash; Botón principal &ndash;&gt;-->
+<!--    <color name="button_background_secondary">#A8D5BA</color> &lt;!&ndash; Botón secundario &ndash;&gt;-->
+<!--    <color name="button_background_tertiary">#F4C95D</color> &lt;!&ndash; Botón terciario &ndash;&gt;-->
+<!--    <color name="button_background_quaternary">#5D7290</color> &lt;!&ndash; Botón cuarto &ndash;&gt;-->
+
+<!--    &lt;!&ndash; Colores de accesibilidad &ndash;&gt;-->
+<!--    <color name="accessible_green">#81C784</color>-->
+<!--    <color name="accessible_red">#E57373</color>-->
+
+<!--    &lt;!&ndash; Otros colores útiles &ndash;&gt;-->
+<!--    <color name="white">#FFFFFF</color>-->
+<!--    <color name="black">#000000</color>-->
+<!--    <color name="gray">#878787</color>-->
+<!--    <color name="warning_color">#FF6F61</color> &lt;!&ndash; Advertencia &ndash;&gt;-->
+
+<!--    <color name="background_light">#F7F7F7</color> &lt;!&ndash; Fondo claro sugerido &ndash;&gt;-->
+<!--</resources>-->

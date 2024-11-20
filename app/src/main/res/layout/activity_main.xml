@@ -1,119 +1,133 @@
-<LinearLayout
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/background_light"
     android:padding="16dp">
 
-    <!-- Encabezado -->
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="8dp">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvAppName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Silver Digital"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="@color/primary_text"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true" />
-
-        <ImageButton
+        <!-- Botón de Configuraciones -->
+        <Button
             android:id="@+id/btnSettings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_settings"
-            android:layout_alignParentEnd="true"
-            android:contentDescription="Configuraciones"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:tint="@color/primary_text" />
-    </RelativeLayout>
+            android:text="Configuraciones"
+            android:textAllCaps="true"
+            android:layout_gravity="end"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/button_primary"
+            android:textColor="@android:color/white" />
 
-    <!-- Sección de Consejos Médicos -->
-    <TextView
-        android:id="@+id/tvConsejosHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Consejos Médicos"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="@color/primary_text"
-        android:paddingBottom="8dp" />
+        <!-- Título de la aplicación -->
+        <TextView
+            android:id="@+id/tvAppTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Silver Digital"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_text"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvConsejos"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingBottom="16dp" />
+        <!-- RecyclerView de Consejos Médicos -->
+        <TextView
+            android:id="@+id/tvConsejosTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Consejos Médicos"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_text"
+            android:layout_marginBottom="8dp" />
 
-    <!-- Botón "Ver Más Consejos" -->
-    <Button
-        android:id="@+id/btnVerMasConsejos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ver Más Consejos"
-        android:layout_gravity="center_horizontal"
-        android:backgroundTint="@color/primaryColor"
-        android:textColor="@color/white"
-        android:layout_marginBottom="16dp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvConsejos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
 
-    <!-- Sección Medicamentos -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Próximos Medicamentos"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:paddingBottom="8dp" />
+        <!-- Botón de Ver Más Consejos -->
+<!--        <Button-->
+<!--            android:id="@+id/btnVerMasConsejos"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="VER MÁS CONSEJOS"-->
+<!--            android:textAllCaps="true"-->
+<!--            android:backgroundTint="@color/button_primary"-->
+<!--            android:textColor="@android:color/white"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:layout_marginBottom="24dp" />-->
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPagerMedicamentos"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:layout_marginBottom="16dp"
-        android:minHeight="200dp" />
+        <!-- RecyclerView de Próximas Citas -->
+        <TextView
+            android:id="@+id/tvProximasCitasTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Próximas Citas Médicas"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_text"
+            android:layout_marginBottom="8dp" />
 
-    <!-- Botón Agregar Medicamento -->
-    <Button
-        android:id="@+id/btnAgregarMedicamento"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Agregar Medicamento"
-        android:layout_gravity="center_horizontal"
-        android:backgroundTint="@color/primaryColor"
-        android:textColor="@color/white"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="-70dp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCitas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
 
-    <!-- Sección Citas Médicas -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Próximas Citas Médicas"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:paddingBottom="8dp" />
+        <Button
+            android:id="@+id/btnAgregarCita"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AGREGAR CITA MEDICA"
+            android:textAllCaps="true"
+            android:backgroundTint="@color/button_primary"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCitas"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingBottom="16dp" />
+        <!-- ViewPager2 para mostrar medicamentos -->
+        <TextView
+            android:id="@+id/tvProximosMedicamentosTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Próximos Medicamentos"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_text"
+            android:layout_marginBottom="8dp" />
 
-    <!-- Menú Inferior -->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:menu="@menu/bottom_nav_menu" />
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
 
-</LinearLayout>
+        <!-- Botón Agregar Medicamento -->
+        <Button
+            android:id="@+id/btnAgregarMedicamento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="AGREGAR MEDICAMENTO"
+            android:backgroundTint="@color/button_primary"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="24dp" />
+
+        <!-- BottomNavigationView -->
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:menu="@menu/bottom_nav_menu"
+            android:layout_marginTop="10dp"
+            app:itemTextColor="@color/white"
+            android:background="@color/quaternary_color"/>
+    </LinearLayout>
+</ScrollView>

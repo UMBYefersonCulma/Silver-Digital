@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <corners android:radius="12dp" />
-    <solid android:color="@color/accessible_green" />
-    <stroke android:color="@color/primary_text" android:width="1dp" />
+    <solid android:color="@color/tertiary_color" /> <!-- Fondo terciario -->
+    <stroke android:color="@color/primary_color" android:width="1dp" /> <!-- Borde primario -->
 </shape>

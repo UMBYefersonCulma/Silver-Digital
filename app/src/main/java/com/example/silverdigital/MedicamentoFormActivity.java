@@ -23,7 +23,7 @@ import java.util.Locale;
 public class MedicamentoFormActivity extends AppCompatActivity {
 
     private EditText etNombre, etDosis, etHorario, etObservaciones;
-    private Button btnGuardar;
+    private Button btnGuardar, btnEliminar;
     private int medicamentoId = -1;
 
     @Override
@@ -37,6 +37,7 @@ public class MedicamentoFormActivity extends AppCompatActivity {
         etHorario = findViewById(R.id.etHorario);
         etObservaciones = findViewById(R.id.etObservaciones);
         btnGuardar = findViewById(R.id.btnGuardar);
+        btnEliminar = findViewById(R.id.btnEliminar);
 
         // Verificar si estamos editando un medicamento existente
         Intent intent = getIntent();
@@ -58,10 +59,17 @@ public class MedicamentoFormActivity extends AppCompatActivity {
 
         // Configurar el clic en etHorario para abrir el TimePickerDialog
         etHorario.setOnClickListener(v -> mostrarTimePicker());
+
+        // Configurar el botón de eliminar (si estamos editando)
+        if (medicamentoId != -1) {
+            btnEliminar.setOnClickListener(v -> eliminarMedicamento());
+            btnEliminar.setEnabled(true);
+        } else {
+            btnEliminar.setEnabled(false);
+        }
     }
 
     private void mostrarTimePicker() {
-        // Obtener la hora actual
         Calendar currentTime = Calendar.getInstance();
         int currentHour = currentTime.get(Calendar.HOUR_OF_DAY);
         int currentMinute = currentTime.get(Calendar.MINUTE);
@@ -72,9 +80,9 @@ public class MedicamentoFormActivity extends AppCompatActivity {
                     String horaFormateada = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute);
                     etHorario.setText(horaFormateada);
                 },
-                currentHour, // Hora actual
-                currentMinute, // Minuto actual
-                true // Modo 24 horas
+                currentHour,
+                currentMinute,
+                true
         );
 
         timePickerDialog.show();
@@ -86,7 +94,7 @@ public class MedicamentoFormActivity extends AppCompatActivity {
         String horario = etHorario.getText().toString().trim();
         String observaciones = etObservaciones.getText().toString().trim();
 
-        if (nombre.isEmpty() || dosis.isEmpty() || horario.isEmpty() || observaciones.isEmpty()) {
+        if (nombre.isEmpty() || nombre==""|| dosis.isEmpty() || dosis==""|| horario.isEmpty() ||horario==""|| observaciones.isEmpty()||observaciones=="") {
             Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -96,7 +104,6 @@ public class MedicamentoFormActivity extends AppCompatActivity {
         new Thread(() -> {
             Medicamento medicamento;
             if (medicamentoId == -1) {
-                // Crear un nuevo medicamento
                 medicamento = new Medicamento();
                 medicamento.setNombre(nombre);
                 medicamento.setDosis(dosis);
@@ -104,7 +111,6 @@ public class MedicamentoFormActivity extends AppCompatActivity {
                 medicamento.setObservaciones(observaciones);
                 db.medicamentoDao().insertar(medicamento);
             } else {
-                // Editar un medicamento existente
                 medicamento = db.medicamentoDao().obtenerPorId(medicamentoId);
                 medicamento.setNombre(nombre);
                 medicamento.setDosis(dosis);
@@ -115,23 +121,55 @@ public class MedicamentoFormActivity extends AppCompatActivity {
 
             programarRecordatorio(medicamento);
 
-
             runOnUiThread(() -> {
                 Toast.makeText(this, "Medicamento guardado", Toast.LENGTH_SHORT).show();
                 setResult(RESULT_OK);
-                restartApp(); // Reiniciar la aplicación
+                restartApp();
             });
         }).start();
     }
 
-    /**
-     * Reinicia la aplicación cargando la actividad principal nuevamente.
-     */
+    private void eliminarMedicamento() {
+        AppDatabase db = AppDatabase.getDatabase(getApplicationContext());
+
+        new Thread(() -> {
+            Medicamento medicamento = db.medicamentoDao().obtenerPorId(medicamentoId);
+            if (medicamento != null) {
+                db.medicamentoDao().delete(medicamento);
+                cancelarRecordatorio(medicamento);
+
+                runOnUiThread(() -> {
+                    Toast.makeText(this, "Medicamento eliminado", Toast.LENGTH_SHORT).show();
+                    finish();
+                });
+                restartApp();
+            }
+        }).start();
+    }
+
+    private void cancelarRecordatorio(Medicamento medicamento) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        Intent intent = new Intent(this, MedicationReminderReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this,
+                medicamento.getId(),
+                intent,
+                PendingIntent.FLAG_NO_CREATE | PendingIntent.FLAG_IMMUTABLE
+        );
+
+        if (alarmManager != null && pendingIntent != null) {
+            alarmManager.cancel(pendingIntent);
+        }
+
+        Log.d("cancelarRecordatorio", "Recordatorio cancelado para medicamento ID: " + medicamento.getId());
+    }
+
     private void restartApp() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        finish(); // Cerrar la actividad actual
+        finish();
     }
 
     @SuppressLint("ScheduleExactAlarm")
@@ -148,13 +186,14 @@ public class MedicamentoFormActivity extends AppCompatActivity {
         calendar.set(Calendar.MINUTE, minuto);
         calendar.set(Calendar.SECOND, 0);
 
-        // Programar notificación para la hora exacta
+        // --- Notificación principal ---
         Intent mainIntent = new Intent(this, MedicationReminderReceiver.class);
         mainIntent.putExtra("medicamentoId", medicamento.getId());
-        mainIntent.putExtra("nombre", medicamento.getNombre());
+        mainIntent.putExtra("nombre", medicamento.getNombre()); // Nombre del medicamento
+
         PendingIntent mainPendingIntent = PendingIntent.getBroadcast(
                 this,
-                medicamento.getId(),
+                medicamento.getId(), // ID único para la notificación principal
                 mainIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
@@ -163,16 +202,17 @@ public class MedicamentoFormActivity extends AppCompatActivity {
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), mainPendingIntent);
         }
 
-        // Programar notificación 2 minutos antes
+        // --- Notificación anticipada (2 minutos antes) ---
         Calendar reminderCalendar = (Calendar) calendar.clone();
-        reminderCalendar.add(Calendar.MINUTE, -2);
+        reminderCalendar.add(Calendar.MINUTE, -2); // 2 minutos antes
 
         Intent reminderIntent = new Intent(this, MedicationReminderReceiver.class);
         reminderIntent.putExtra("medicamentoId", medicamento.getId());
-        reminderIntent.putExtra("nombre", "Pronto debes tomar: " + medicamento.getNombre());
+        reminderIntent.putExtra("nombre", medicamento.getNombre()); // Nombre del medicamento
+
         PendingIntent reminderPendingIntent = PendingIntent.getBroadcast(
                 this,
-                medicamento.getId() * 1000, // ID único para el recordatorio
+                medicamento.getId() * 1000, // ID único para la notificación anticipada
                 reminderIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
@@ -181,7 +221,8 @@ public class MedicamentoFormActivity extends AppCompatActivity {
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, reminderCalendar.getTimeInMillis(), reminderPendingIntent);
         }
 
-        // Imprime en Logcat para confirmar la programación
-        Log.d("programarRecordatorio", "Recordatorios programados para: " + calendar.getTime() + " y " + reminderCalendar.getTime());
+        // Logs para depuración
+        Log.d("programarRecordatorio", "Notificación principal programada para: " + calendar.getTime());
+        Log.d("programarRecordatorio", "Notificación anticipada programada para: " + reminderCalendar.getTime());
     }
 }

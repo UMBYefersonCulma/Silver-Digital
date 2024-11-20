@@ -11,21 +11,24 @@
         android:id="@+id/tvNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nombre del Medicamento"
+        android:text="@string/medicine_name"
         android:textStyle="bold"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textColor="@color/primary_text" />
 
     <TextView
         android:id="@+id/tvDosis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dosis"
-        android:textSize="14sp" />
+        android:text="@string/medicine_dosage"
+        android:textSize="14sp"
+        android:textColor="@color/secondary_text" />
 
     <TextView
         android:id="@+id/tvHorario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Horario"
-        android:textSize="14sp" />
+        android:text="@string/medicine_schedule"
+        android:textSize="14sp"
+        android:textColor="@color/secondary_text" />
 </LinearLayout>

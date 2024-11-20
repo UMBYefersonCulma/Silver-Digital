@@ -17,7 +17,7 @@ public interface MedicamentoDao {
     void actualizar(Medicamento medicamento);
 
     @Delete
-    void eliminar(Medicamento medicamento);
+    void delete(Medicamento medicamento);
 
     @Query("SELECT * FROM medicamentos")
     List<Medicamento> obtenerTodos();

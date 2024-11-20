@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
     <style name="TextTitleLarge">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textSize">22sp</item>
         <item name="android:lineHeight">28sp</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:fontWeight">400</item>
-        <item name="colorPrimary">@color/purple_80</item>
-        <item name="colorSecondary">@color/purple_grey_80</item>
+        <!-- Actualizamos los colores -->
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorSecondary">@color/secondary_color</item>
         <item name="android:colorBackground">@color/background_dark</item>
     </style>
 
@@ -19,8 +19,8 @@
         <item name="android:lineHeight">24sp</item>
         <item name="android:letterSpacing">0.05</item>
         <item name="android:fontWeight">400</item>
+        <!-- Opcional: puedes añadir color aquí si es necesario -->
+        <item name="android:textColor">@color/primary_text</item>
     </style>
-
-
 
 </resources>
