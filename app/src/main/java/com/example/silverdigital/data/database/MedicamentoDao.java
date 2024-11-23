@@ -17,8 +17,11 @@ public interface MedicamentoDao {
     void actualizar(Medicamento medicamento);
 
     @Delete
-    void eliminar(Medicamento medicamento);
+    void delete(Medicamento medicamento);
 
     @Query("SELECT * FROM medicamentos")
     List<Medicamento> obtenerTodos();
+
+    @Query("SELECT * FROM medicamentos WHERE id = :medicamentoId LIMIT 1")
+    Medicamento obtenerPorId(int medicamentoId);
 }
