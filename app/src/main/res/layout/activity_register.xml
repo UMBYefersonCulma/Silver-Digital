@@ -1,0 +1,74 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/background_light">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registro de Usuario"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:textColor="@color/primary_text" />
+
+    <!-- Campo de nombre -->
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre"
+        android:inputType="textPersonName"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Campo de correo -->
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Correo Electrónico"
+        android:inputType="textEmailAddress"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Campo de contraseña -->
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Campo de confirmación de contraseña -->
+    <EditText
+        android:id="@+id/etConfirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Confirmar Contraseña"
+        android:inputType="textPassword"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Botón para registrar -->
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Registrar"
+        android:backgroundTint="@color/primary_button"
+        android:textColor="@color/white"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Botón para volver al inicio de sesión -->
+    <TextView
+        android:id="@+id/tvLoginRedirect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿Ya tienes una cuenta? Inicia Sesión"
+        android:textSize="14sp"
+        android:textColor="@color/link_text"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp" />
+</LinearLayout>

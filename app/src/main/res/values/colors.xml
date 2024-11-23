@@ -36,6 +36,9 @@
     <color name="tertiary_text">#9E9E9E</color> <!-- Gris más claro -->
     <color name="button_delete">#F44336</color>
     <color name="button_primary">#D12222</color> <!-- Azul moderno -->
+
+    <color name="primary_button">#D12222</color> <!-- Color para botones principales -->
+    <color name="link_text">#03A9F4</color>
 </resources>
 
 

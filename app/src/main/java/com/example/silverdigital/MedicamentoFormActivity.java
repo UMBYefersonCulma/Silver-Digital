@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,7 @@ public class MedicamentoFormActivity extends AppCompatActivity {
     private EditText etNombre, etDosis, etHorario, etObservaciones;
     private Button btnGuardar, btnEliminar;
     private int medicamentoId = -1;
+    private CheckBox checkLunes, checkMartes, checkMiercoles, checkJueves, checkViernes, checkSabado, checkDomingo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,13 @@ public class MedicamentoFormActivity extends AppCompatActivity {
         etObservaciones = findViewById(R.id.etObservaciones);
         btnGuardar = findViewById(R.id.btnGuardar);
         btnEliminar = findViewById(R.id.btnEliminar);
+        checkLunes = findViewById(R.id.check_lunes);
+        checkMartes = findViewById(R.id.check_martes);
+        checkMiercoles = findViewById(R.id.check_miercoles);
+        checkJueves = findViewById(R.id.check_jueves);
+        checkViernes = findViewById(R.id.check_viernes);
+        checkSabado = findViewById(R.id.check_sabado);
+        checkDomingo = findViewById(R.id.check_domingo);
 
         // Obtener si estamos editando o creando
         boolean isEditing = getIntent().getBooleanExtra("isEditing", false);
@@ -109,38 +118,60 @@ public class MedicamentoFormActivity extends AppCompatActivity {
     }
 
     private void guardarMedicamento() {
+        // Obtener valores de los campos
         String nombre = etNombre.getText().toString().trim();
         String dosis = etDosis.getText().toString().trim();
         String horario = etHorario.getText().toString().trim();
         String observaciones = etObservaciones.getText().toString().trim();
+        String diasSeleccionados = obtenerDiasSeleccionados();
 
-        if (nombre.isEmpty() || nombre==""|| dosis.isEmpty() || dosis==""|| horario.isEmpty() ||horario==""|| observaciones.isEmpty()||observaciones=="") {
+        // Validar que todos los campos estén completos
+        if (nombre.isEmpty() || dosis.isEmpty() || horario.isEmpty() || observaciones.isEmpty() || diasSeleccionados.isEmpty()) {
             Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        // Obtener instancia de la base de datos
         AppDatabase db = AppDatabase.getDatabase(getApplicationContext());
 
         new Thread(() -> {
             Medicamento medicamento;
+
             if (medicamentoId == -1) {
+                // Crear un nuevo medicamento
                 medicamento = new Medicamento();
                 medicamento.setNombre(nombre);
                 medicamento.setDosis(dosis);
                 medicamento.setHorario(horario);
                 medicamento.setObservaciones(observaciones);
+                medicamento.setDiasSemana(diasSeleccionados);
+
+                // Insertar en la base de datos
                 db.medicamentoDao().insertar(medicamento);
             } else {
+                // Editar medicamento existente
                 medicamento = db.medicamentoDao().obtenerPorId(medicamentoId);
-                medicamento.setNombre(nombre);
-                medicamento.setDosis(dosis);
-                medicamento.setHorario(horario);
-                medicamento.setObservaciones(observaciones);
-                db.medicamentoDao().actualizar(medicamento);
+                if (medicamento != null) {
+                    medicamento.setNombre(nombre);
+                    medicamento.setDosis(dosis);
+                    medicamento.setHorario(horario);
+                    medicamento.setObservaciones(observaciones);
+                    medicamento.setDiasSemana(diasSeleccionados);
+
+                    // Actualizar en la base de datos
+                    db.medicamentoDao().actualizar(medicamento);
+                } else {
+                    runOnUiThread(() ->
+                            Toast.makeText(this, "Error al cargar el medicamento", Toast.LENGTH_SHORT).show()
+                    );
+                    return;
+                }
             }
 
+            // Programar recordatorio para el medicamento
             programarRecordatorio(medicamento);
 
+            // Volver al hilo principal para mostrar feedback
             runOnUiThread(() -> {
                 Toast.makeText(this, "Medicamento guardado", Toast.LENGTH_SHORT).show();
                 setResult(RESULT_OK);
@@ -165,6 +196,24 @@ public class MedicamentoFormActivity extends AppCompatActivity {
                 restartApp();
             }
         }).start();
+    }
+
+    private String obtenerDiasSeleccionados() {
+        StringBuilder diasSeleccionados = new StringBuilder();
+
+        if (checkLunes.isChecked()) diasSeleccionados.append("Lunes, ");
+        if (checkMartes.isChecked()) diasSeleccionados.append("Martes, ");
+        if (checkMiercoles.isChecked()) diasSeleccionados.append("Miércoles, ");
+        if (checkJueves.isChecked()) diasSeleccionados.append("Jueves, ");
+        if (checkViernes.isChecked()) diasSeleccionados.append("Viernes, ");
+        if (checkSabado.isChecked()) diasSeleccionados.append("Sábado, ");
+        if (checkDomingo.isChecked()) diasSeleccionados.append("Domingo, ");
+
+        if (diasSeleccionados.length() > 0) {
+            diasSeleccionados.setLength(diasSeleccionados.length() - 2); // Eliminar la última coma y espacio
+        }
+
+        return diasSeleccionados.toString();
     }
 
     private void cancelarRecordatorio(Medicamento medicamento) {
