@@ -8,8 +8,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +34,7 @@ public class MedicamentoFormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_medicamento_form);
 
         // Inicializar vistas
+        TextView titulo = findViewById(R.id.tvTituloEdicion);
         etNombre = findViewById(R.id.etNombre);
         etDosis = findViewById(R.id.etDosis);
         etHorario = findViewById(R.id.etHorario);
@@ -39,9 +42,15 @@ public class MedicamentoFormActivity extends AppCompatActivity {
         btnGuardar = findViewById(R.id.btnGuardar);
         btnEliminar = findViewById(R.id.btnEliminar);
 
+        // Obtener si estamos editando o creando
+        boolean isEditing = getIntent().getBooleanExtra("isEditing", false);
+
         // Verificar si estamos editando un medicamento existente
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("medicamentoId")) {
+        if (intent != null && intent.hasExtra("medicamentoId")&&isEditing) {
+            titulo.setText("Edición de Medicina");
+            btnEliminar.setVisibility(View.VISIBLE);
+
             medicamentoId = intent.getIntExtra("medicamentoId", -1);
             String nombre = intent.getStringExtra("nombre");
             String dosis = intent.getStringExtra("dosis");
@@ -53,7 +62,18 @@ public class MedicamentoFormActivity extends AppCompatActivity {
             etDosis.setText(dosis);
             etHorario.setText(horario);
             etObservaciones.setText(observaciones);
+        }else {
+            // Modo creación
+            titulo.setText("Crear Nueva Medicina");
+            btnEliminar.setVisibility(View.GONE);
+
+            // Asegurarse de limpiar los campos
+            etNombre.setText("");
+            etDosis.setText("");
+            etHorario.setText("");
+            etObservaciones.setText("");
         }
+
 
         btnGuardar.setOnClickListener(v -> guardarMedicamento());
 

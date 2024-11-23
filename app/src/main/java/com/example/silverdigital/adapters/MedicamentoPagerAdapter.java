@@ -1,10 +1,6 @@
 package com.example.silverdigital.adapters;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.AlertDialog;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -12,15 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.silverdigital.MedicamentoFormActivity;
-import com.example.silverdigital.MedicationReminderReceiver;
 import com.example.silverdigital.R;
-import com.example.silverdigital.data.database.AppDatabase;
 import com.example.silverdigital.data.model.Medicamento;
 
 import java.util.List;
@@ -38,7 +31,6 @@ public class MedicamentoPagerAdapter extends RecyclerView.Adapter<MedicamentoPag
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.medicamento_item_vertical, parent, false);
-
         return new ViewHolder(view);
     }
 
@@ -48,12 +40,15 @@ public class MedicamentoPagerAdapter extends RecyclerView.Adapter<MedicamentoPag
         Context context = holder.itemView.getContext();
 
         // Configurar Medicamento 1
-        Medicamento medicamento1 = grupo.get(0);
-        setMedicamentoData(holder.tvNombreMedicamento1, holder.tvDosisMedicamento1, holder.tvHorarioMedicamento1, holder.tvObservaciones1, medicamento1);
+        if (grupo.size() > 0) {
+            Medicamento medicamento1 = grupo.get(0);
+            setMedicamentoData(holder.tvNombreMedicamento1, holder.tvDosisMedicamento1, holder.tvHorarioMedicamento1, holder.tvObservaciones1, medicamento1);
 
-        holder.linearLayoutMedicamento1.setOnClickListener(v -> {
-            abrirMenuEdicion(context, medicamento1);
-        });
+            holder.linearLayoutMedicamento1.setVisibility(View.VISIBLE);
+            holder.linearLayoutMedicamento1.setOnClickListener(v -> abrirMenuEdicion(context, medicamento1));
+        } else {
+            holder.linearLayoutMedicamento1.setVisibility(View.GONE);
+        }
 
         // Configurar Medicamento 2 (si existe)
         if (grupo.size() > 1) {
@@ -61,27 +56,29 @@ public class MedicamentoPagerAdapter extends RecyclerView.Adapter<MedicamentoPag
             setMedicamentoData(holder.tvNombreMedicamento2, holder.tvDosisMedicamento2, holder.tvHorarioMedicamento2, holder.tvObservaciones2, medicamento2);
 
             holder.linearLayoutMedicamento2.setVisibility(View.VISIBLE);
-            holder.linearLayoutMedicamento2.setOnClickListener(v -> {
-                abrirMenuEdicion(context, medicamento2);
-            });
+            holder.linearLayoutMedicamento2.setOnClickListener(v -> abrirMenuEdicion(context, medicamento2));
         } else {
             holder.linearLayoutMedicamento2.setVisibility(View.GONE);
         }
     }
 
+    @Override
+    public int getItemCount() {
+        return gruposMedicamentos != null ? gruposMedicamentos.size() : 0;
+    }
+
+    /**
+     * Abrir el menú de edición con los datos del medicamento.
+     */
     private void abrirMenuEdicion(Context context, Medicamento medicamento) {
         Intent intent = new Intent(context, MedicamentoFormActivity.class);
+        intent.putExtra("isEditing", true); // Indicar que estamos editando
         intent.putExtra("medicamentoId", medicamento.getId());
         intent.putExtra("nombre", medicamento.getNombre());
         intent.putExtra("dosis", medicamento.getDosis());
         intent.putExtra("horario", medicamento.getHorario());
         intent.putExtra("observaciones", medicamento.getObservaciones());
         context.startActivity(intent);
-    }
-
-    @Override
-    public int getItemCount() {
-        return gruposMedicamentos != null ? gruposMedicamentos.size() : 0;
     }
 
     /**
@@ -105,77 +102,23 @@ public class MedicamentoPagerAdapter extends RecyclerView.Adapter<MedicamentoPag
             return;
         }
 
-        if (tvNombre != null) {
-            tvNombre.setText(medicamento.getNombre() != null ? medicamento.getNombre() : "Nombre no disponible");
-        }
-
-        if (tvDosis != null) {
-            tvDosis.setText(medicamento.getDosis() != null ? "Dosis: " + medicamento.getDosis() : "Dosis no disponible");
-        }
-
-        if (tvHorario != null) {
-            tvHorario.setText(medicamento.getHorario() != null ? "Horario: " + medicamento.getHorario() : "Horario no disponible");
-        }
-
-        if (tvObservaciones != null) {
-            tvObservaciones.setText(medicamento.getObservaciones() != null ? "Observaciones: " + medicamento.getObservaciones() : "Observaciones no disponibles");
-        }
-    }
-
-    /**
-     * Configurar el listener para abrir la actividad de edición del medicamento.
-     */
-    private void setOnClickListener(View view, Context context, Medicamento medicamento) {
-        if (view == null || medicamento == null) return;
-
-        view.setOnClickListener(v -> {
-            Intent intent = new Intent(context, MedicamentoFormActivity.class);
-            intent.putExtra("medicamentoId", medicamento.getId());
-            intent.putExtra("nombre", medicamento.getNombre());
-            intent.putExtra("dosis", medicamento.getDosis());
-            intent.putExtra("horario", medicamento.getHorario());
-            intent.putExtra("observaciones", medicamento.getObservaciones());
-            context.startActivity(intent);
-        });
-    }
-
-    /**
-     * Eliminar un medicamento de la base de datos y cancelar su notificación.
-     */
-    private void eliminarMedicamento(Context context, Medicamento medicamento, int position) {
-        AppDatabase db = AppDatabase.getDatabase(context);
-        new Thread(() -> {
-            if (medicamento != null) {
-                db.medicamentoDao().delete(medicamento);
-
-                // Cancelar notificación asociada
-                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-                Intent intent = new Intent(context, MedicationReminderReceiver.class);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                        context,
-                        medicamento.getId(),
-                        intent,
-                        PendingIntent.FLAG_NO_CREATE | PendingIntent.FLAG_IMMUTABLE
-                );
-                if (alarmManager != null && pendingIntent != null) {
-                    alarmManager.cancel(pendingIntent);
-                }
-
-                ((Activity) context).runOnUiThread(() -> {
-                    gruposMedicamentos.remove(position);
-                    notifyDataSetChanged();
-                });
-            }
-        }).start();
+        tvNombre.setText(medicamento.getNombre() != null ? medicamento.getNombre() : "Nombre no disponible");
+        tvDosis.setText(medicamento.getDosis() != null ? "Dosis: " + medicamento.getDosis() : "Dosis no disponible");
+        tvHorario.setText(medicamento.getHorario() != null ? "Horario: " + medicamento.getHorario() : "Horario no disponible");
+        tvObservaciones.setText(medicamento.getObservaciones() != null ? "Observaciones: " + medicamento.getObservaciones() : "Observaciones no disponibles");
     }
 
     /**
      * ViewHolder para los medicamentos.
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        // Vistas del Medicamento 1
         TextView tvNombreMedicamento1, tvDosisMedicamento1, tvHorarioMedicamento1, tvObservaciones1;
+        View linearLayoutMedicamento1;
+
+        // Vistas del Medicamento 2
         TextView tvNombreMedicamento2, tvDosisMedicamento2, tvHorarioMedicamento2, tvObservaciones2;
-        View linearLayoutMedicamento1,linearLayoutMedicamento2;
+        View linearLayoutMedicamento2;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -1,11 +1,15 @@
 package com.example.silverdigital;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -53,9 +57,7 @@ public class MainActivity extends AppCompatActivity {
             );
             channel.setDescription("Canal para los recordatorios de medicamentos");
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            if (notificationManager != null) {
-                notificationManager.createNotificationChannel(channel);
-            }
+            notificationManager.createNotificationChannel(channel);
         }
     }
 
@@ -97,18 +99,18 @@ public class MainActivity extends AppCompatActivity {
      * Cargar medicamentos desde la base de datos y actualizar el adaptador.
      */
     private void cargarMedicamentos() {
+        AppDatabase db = AppDatabase.getDatabase(getApplicationContext());
         new Thread(() -> {
-            AppDatabase db = AppDatabase.getDatabase(getApplicationContext());
             List<Medicamento> medicamentos = db.medicamentoDao().obtenerTodos();
-
             List<List<Medicamento>> grupos = agruparMedicamentos(medicamentos);
 
             runOnUiThread(() -> {
-                if (medicamentoAdapter == null) {
-                    medicamentoAdapter = new MedicamentoPagerAdapter(grupos);
-                    viewPagerMedicamentos.setAdapter(medicamentoAdapter);
-                } else {
-                    medicamentoAdapter.updateData(grupos); // Actualizar el adaptador
+                medicamentoAdapter.updateData(grupos);
+
+                // Programar notificaciones solo para medicamentos válidos
+                for (Medicamento medicamento : medicamentos) {
+                    cancelarNotificaciones(medicamento); // Cancelar alarmas previas
+                    programarNotificaciones(medicamento); // Programar nuevas alarmas
                 }
             });
         }).start();
@@ -171,7 +173,110 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_ADD_MEDICAMENTO) {
-            cargarMedicamentos(); // Recargar los medicamentos después de agregar o editar
+            cargarMedicamentos();
         }
+    }
+
+    @SuppressLint("ScheduleExactAlarm")
+    private void programarNotificaciones(Medicamento medicamento) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        // Calcular los tiempos en milisegundos
+        long horarioEnMilis = convertirHorarioAMillis(medicamento.getHorario());
+        long ahora = System.currentTimeMillis();
+
+        // No programar notificaciones si el horario ya pasó
+        if (horarioEnMilis <= ahora) {
+            Log.d("ProgramarNotificaciones", "Horario pasado para " + medicamento.getNombre() + ". No se programará.");
+            return;
+        }
+
+        // Hora exacta
+        Intent exactIntent = new Intent(this, MedicationReminderReceiver.class);
+        exactIntent.putExtra("medicamentoId", medicamento.getId());
+        exactIntent.putExtra("nombre", medicamento.getNombre());
+        exactIntent.putExtra("esAnticipado", false);
+        PendingIntent exactPendingIntent = PendingIntent.getBroadcast(
+                this,
+                medicamento.getId(),
+                exactIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+
+        // Hora ajustada (2 minutos antes)
+        Intent earlyIntent = new Intent(this, MedicationReminderReceiver.class);
+        earlyIntent.putExtra("medicamentoId", medicamento.getId());
+        earlyIntent.putExtra("nombre", medicamento.getNombre());
+        earlyIntent.putExtra("esAnticipado", true);
+        PendingIntent earlyPendingIntent = PendingIntent.getBroadcast(
+                this,
+                medicamento.getId() + 1000,
+                earlyIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+
+        if (alarmManager != null) {
+            // Programar la alarma para 2 minutos antes
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, horarioEnMilis - (2 * 60 * 1000), earlyPendingIntent);
+            Log.d("ProgramarNotificaciones", "Notificación 2 minutos antes programada para " + medicamento.getNombre());
+
+            // Programar la alarma para la hora exacta
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, horarioEnMilis, exactPendingIntent);
+            Log.d("ProgramarNotificaciones", "Notificación exacta programada para " + medicamento.getNombre());
+        }
+    }
+
+    private void cancelarNotificaciones(Medicamento medicamento) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        // Hora exacta
+        Intent exactIntent = new Intent(this, MedicationReminderReceiver.class);
+        PendingIntent exactPendingIntent = PendingIntent.getBroadcast(
+                this,
+                medicamento.getId(),
+                exactIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+
+        // Hora ajustada (2 minutos antes)
+        Intent earlyIntent = new Intent(this, MedicationReminderReceiver.class);
+        PendingIntent earlyPendingIntent = PendingIntent.getBroadcast(
+                this,
+                medicamento.getId() + 1000,
+                earlyIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+
+        if (alarmManager != null) {
+            if (exactPendingIntent != null) {
+                alarmManager.cancel(exactPendingIntent);
+                Log.d("CancelarNotificaciones", "Notificación exacta cancelada para " + medicamento.getNombre());
+            }
+            if (earlyPendingIntent != null) {
+                alarmManager.cancel(earlyPendingIntent);
+                Log.d("CancelarNotificaciones", "Notificación anticipada cancelada para " + medicamento.getNombre());
+            }
+        }
+    }
+
+    private long convertirHorarioAMillis(String horario) {
+        try {
+            @SuppressLint("SimpleDateFormat")
+            java.text.SimpleDateFormat formato = new java.text.SimpleDateFormat("HH:mm");
+            java.util.Date fecha = formato.parse(horario);
+
+            java.util.Calendar calendario = java.util.Calendar.getInstance();
+            if (fecha != null) {
+                calendario.setTime(fecha);
+                java.util.Calendar hoy = java.util.Calendar.getInstance();
+                calendario.set(java.util.Calendar.YEAR, hoy.get(java.util.Calendar.YEAR));
+                calendario.set(java.util.Calendar.MONTH, hoy.get(java.util.Calendar.MONTH));
+                calendario.set(java.util.Calendar.DAY_OF_MONTH, hoy.get(java.util.Calendar.DAY_OF_MONTH));
+                return calendario.getTimeInMillis();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0; // En caso de error
     }
 }

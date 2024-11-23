@@ -5,7 +5,7 @@
     <!-- Paleta principal -->
     <color name="primary_color">#D12222</color> <!-- Azul moderno -->
     <color name="secondary_color">#50C878</color> <!-- Verde esmeralda -->
-    <color name="tertiary_color">#FFD700</color> <!-- Dorado brillante -->
+    <color name="tertiary_color">#9EFFD700</color> <!-- Dorado brillante -->
     <color name="quaternary_color">#34495E</color> <!-- Azul grisáceo -->
 
     <!-- Colores de fondo y texto -->

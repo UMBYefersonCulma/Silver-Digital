@@ -68,8 +68,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Observaciones: Ninguna"
-                    android:textSize="14sp"
-                    android:textColor="@color/tertiary_text"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
                     android:layout_marginTop="6dp" />
             </LinearLayout>
 
@@ -113,8 +113,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Observaciones: Ninguna"
-                    android:textSize="14sp"
-                    android:textColor="@color/tertiary_text"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
                     android:layout_marginTop="6dp" />
             </LinearLayout>
         </LinearLayout>
