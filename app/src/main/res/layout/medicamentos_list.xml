@@ -1,0 +1,48 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@drawable/border_background"
+    android:layout_margin="8dp"
+    android:elevation="4dp">
+
+    <TextView
+        android:id="@+id/tvNombre"
+        style="@style/TextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@color/primary_text"
+        android:textStyle="bold"
+        android:text="@string/medicamento_nombre"
+        android:paddingBottom="4dp" />
+
+    <TextView
+        android:id="@+id/tvDosis"
+        style="@style/TextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/medicamento_dosis"
+        android:textColor="@color/secondary_text"
+        android:paddingBottom="4dp" />
+
+    <TextView
+        android:id="@+id/tvHorario"
+        style="@style/TextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/medicamento_horario"
+        android:textColor="@color/secondary_text"/>
+
+    <TextView
+        android:id="@+id/tvObservaciones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:textColor="@color/primary_text"
+        android:padding="4dp"
+        android:textSize="14sp"
+        android:text="@string/medicamento_observaciones" />
+</LinearLayout>

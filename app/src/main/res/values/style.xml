@@ -1,10 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Tema Principal de Silver Digital (Claro) -->
-    <style name="Theme.SilverDigital" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/purple_40</item>
-        <item name="colorSecondary">@color/purple_grey_40</item>
-        <item name="android:colorBackground">@color/background_light</item>
+    <!-- Tema principal de la aplicación -->
+    <style name="Theme.SilverDigital" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Fondo de la ventana principal -->
+        <item name="android:windowBackground">@color/background_color</item>
+        <!-- Color principal del texto -->
+        <item name="android:textColor">@color/primary_text</item>
+        <!-- Colores principales del tema -->
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryDark">@color/background_dark</item>
+        <item name="colorAccent">@color/secondary_color</item>
     </style>
 
+    <!-- Tema de la Aplicación -->
+    <style name="AppTheme" parent="Theme.SilverDigital">
+        <!-- Configuración adicional para mantener la consistencia -->
+    </style>
+
+    <!-- Estilo de los botones -->
+    <style name="ButtonStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/rounded_button_background</item>
+        <item name="android:textColor">@color/button_text</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <!-- Estilo del texto -->
+    <style name="TextStyle">
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <!-- Estilo para los encabezados -->
+    <style name="HeaderTextStyle">
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Estilo para los subtítulos -->
+    <style name="SubtitleTextStyle">
+        <item name="android:textColor">@color/secondary_text</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 </resources>
