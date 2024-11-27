@@ -6,4 +6,16 @@
     <dimen name="button_height">60dp</dimen>
     <dimen name="button_text_size">16sp</dimen>
     <dimen name="button_margin_top">20dp</dimen>
+
+    <!-- Edicion y creacion de medicina -->
+    <dimen name="top_margin_med">10dp</dimen>
+    <dimen name="padding_med">25dp</dimen>
+    <dimen name="top_margin_med_top">50dp</dimen>
+    <dimen name="text_title_med">20sp</dimen>
+    <dimen name="text_med">18sp</dimen>
+    <dimen name="padding_edittext">18dp</dimen>
+    <dimen name="padding_btn_guardar">10dp</dimen> <!-- Corrected unit to dp -->
+    <dimen name="layout_height_btn">50dp</dimen>
+    <dimen name="layout_margin_bottom_med">16dp</dimen> <!-- Fixed typo: botton to bottom -->
+    <dimen name="textsize_med">20sp</dimen> <!-- Changed dp to sp for text size -->
 </resources>
