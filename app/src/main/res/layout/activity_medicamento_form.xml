@@ -3,166 +3,205 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_light">
+    android:background="@color/background_dark">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/background_light"
-        android:padding="16dp"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:gravity="center_horizontal">
-
-        <TextView
-            android:id="@+id/tvTituloEdicion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/medicine_edit_title"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:textColor="@color/primary_text"
-            android:layout_marginBottom="30dp" />
-
-        <!-- Campo Nombre -->
-        <EditText
-            android:id="@+id/etNombre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/medicine_name_hint"
-            android:background="@drawable/custom_edittext_background"
-            android:padding="12dp"
-            android:textColor="@color/primary_text"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp" />
-
-        <!-- Campo Dosis -->
-        <EditText
-            android:id="@+id/etDosis"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/dose_hint"
-            android:background="@drawable/custom_edittext_background"
-            android:padding="12dp"
-            android:textColor="@color/primary_text"
-            android:inputType="number"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp" />
-
-        <!-- Campo Horario -->
-        <EditText
-            android:id="@+id/etHorario"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/time_hint"
-            android:background="@drawable/custom_edittext_background"
-            android:padding="12dp"
-            android:textColor="@color/primary_text"
-            android:textSize="16sp"
-            android:focusable="false"
-            android:clickable="true"
-            android:layout_marginBottom="8dp" />
-
-        <Spinner
-            android:id="@+id/spinner_frecuencia"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/frecuencia_opciones" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Selecciona los días de la semana:" />
+        android:layout_height="832dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/top_margin_med"
+        android:padding="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <CheckBox
-                android:id="@+id/check_lunes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Lunes" />
-
-            <CheckBox
-                android:id="@+id/check_martes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Martes" />
-
-            <CheckBox
-                android:id="@+id/check_miercoles"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Miércoles" />
-
-            <CheckBox
-                android:id="@+id/check_jueves"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Jueves" />
-
-            <CheckBox
-                android:id="@+id/check_viernes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Viernes" />
-
-            <CheckBox
-                android:id="@+id/check_sabado"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sábado" />
-
-            <CheckBox
-                android:id="@+id/check_domingo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Domingo" />
-        </LinearLayout>
-
-        <!-- Campo Observaciones -->
-        <EditText
-            android:id="@+id/etObservaciones"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/observations_hint"
-            android:background="@drawable/custom_edittext_background"
-            android:padding="12dp"
-            android:textColor="@color/primary_text"
-            android:textSize="16sp"
-            android:inputType="textMultiLine"
-            android:minLines="3"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Botón Guardar -->
-        <Button
-            android:id="@+id/btnGuardar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/save"
-            android:background="@drawable/rounded_button"
-            android:textColor="@color/button_text"
-            android:padding="12dp"
-            android:textSize="18sp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="@dimen/top_margin_med_top"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/rounded_edittext"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_med">
 
-        <!-- Botón Eliminar -->
-        <Button
-            android:id="@+id/btnEliminar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/delete"
-            android:background="@drawable/rounded_button_red"
-            android:textColor="@color/button_text"
-            android:padding="12dp"
-            android:textSize="18sp"
-            android:layout_gravity="center_horizontal" />
-    </LinearLayout>
+            <!-- Título -->
+            <TextView
+                android:id="@+id/tvTituloEdicion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:text="@string/medicine_edit_title"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_title_med"
+                android:textStyle="bold" />
+
+            <!-- Campo Nombre -->
+            <EditText
+                android:id="@+id/etNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_edittext"
+                android:background="@drawable/rounded_edit_text"
+                android:hint="@string/medicine_name_hint"
+                android:padding="@dimen/padding_edittext"
+                android:textColor="@color/black"
+                android:textColorHint="@color/secondary_text"
+                android:textSize="@dimen/text_med"/>
+
+            <!-- Campo Dosis -->
+            <EditText
+                android:id="@+id/etDosis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/rounded_edit_text"
+                android:hint="@string/dose_hint"
+                android:inputType="number"
+                android:padding="@dimen/padding_edittext"
+                android:textColor="@color/black"
+                android:textColorHint="@color/secondary_text"
+                android:textSize="@dimen/text_med"/>
+
+            <!-- Campo Horario -->
+            <EditText
+                android:id="@+id/etHorario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/rounded_edit_text"
+                android:clickable="true"
+                android:focusable="false"
+                android:hint="@string/time_hint"
+                android:padding="@dimen/padding_edittext"
+                android:textColor="@color/black"
+                android:textColorHint="@color/secondary_text"
+                android:textSize="@dimen/text_med"/>
+
+            <!-- Spinner de frecuencia -->
+            <Spinner
+                android:id="@+id/spinner_frecuencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/rounded_edit_text"
+                android:entries="@array/frecuencia_opciones"
+                android:padding="@dimen/padding_edittext"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_med"/>
+
+            <!-- Días de la semana -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:textSize="@dimen/textsize_med"
+                android:text="Selecciona los días de la semana"
+                android:textColor="@color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/layout_margin_bottom_med"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/check_lunes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/white"
+                    android:text="L"
+                    android:textColor="@color/white" />
+
+                <CheckBox
+                    android:id="@+id/check_martes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/white"
+                    android:text="M"
+                    android:textColor="@color/white" />
+
+                <CheckBox
+                    android:id="@+id/check_miercoles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/white"
+                    android:text="X"
+                    android:textColor="@color/white" />
+
+                <CheckBox
+                    android:id="@+id/check_jueves"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/white"
+                    android:text="J"
+                    android:textColor="@color/white" />
+
+                <CheckBox
+                    android:id="@+id/check_viernes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/white"
+                    android:text="V"
+                    android:textColor="@color/white" />
+
+                <CheckBox
+                    android:id="@+id/check_sabado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/white"
+                    android:text="S"
+                    android:textColor="@color/white" />
+
+                <CheckBox
+                    android:id="@+id/check_domingo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/white"
+                    android:text="D"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <!-- Observaciones -->
+            <EditText
+                android:id="@+id/etObservaciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/rounded_edit_text"
+                android:hint="@string/observations_hint"
+                android:inputType="textMultiLine"
+                android:minLines="@integer/min_lines"
+                android:padding="@dimen/padding_edittext"
+                android:textColor="@color/black"
+                android:textColorHint="@color/secondary_text"
+                android:textSize="@dimen/text_med"/>
+
+            <!-- Botón Guardar -->
+            <Button
+                android:id="@+id/btnGuardar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_height_btn"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/rounded_button_background"
+                android:padding="@dimen/padding_btn_guardar"
+                android:text="@string/save"
+                android:textColor="@color/button_text"
+                android:textSize="18sp"
+                android:layout_marginBottom="10dp"/>
+
+            <!-- Botón Eliminar -->
+            <Button
+                android:id="@+id/btnEliminar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_height_btn"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/rounded_button_red"
+                android:padding="@dimen/padding_btn_guardar"
+                android:text="@string/delete"
+                android:textColor="@color/button_text"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

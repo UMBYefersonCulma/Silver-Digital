@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,6 +46,12 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, ConsejosSaludActivity.class);
             startActivity(intent);
             Toast.makeText(this, "Sección Consejos de Salud", Toast.LENGTH_SHORT).show();
+        });
+
+        LinearLayout perfilButton = findViewById(R.id.btnPerfil); // Asegúrate que este sea el ID del botón
+        perfilButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, PerfilActivity.class);
+            startActivity(intent);
         });
     }
 }

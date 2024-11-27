@@ -51,6 +51,16 @@ public class MedicamentoFormActivity extends AppCompatActivity {
         checkSabado = findViewById(R.id.check_sabado);
         checkDomingo = findViewById(R.id.check_domingo);
 
+        // Encuentra el EditText
+        EditText editText = findViewById(R.id.etObservaciones);
+
+        // Obtén el valor de min_lines del archivo dimens
+        int minLines = getResources().getInteger(R.integer.min_lines);
+        editText.setMinLines(minLines);
+
+        // Asigna el valor al EditText
+        editText.setMinLines(minLines);
+
         // Obtener si estamos editando o creando
         boolean isEditing = getIntent().getBooleanExtra("isEditing", false);
 
