@@ -22,7 +22,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SilverDigital"
+        android:theme="@style/Theme.SilverDigital.Light"
         tools:targetApi="31">
         <!-- Actividad principal para teléfonos -->
         <activity
@@ -50,6 +50,10 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MedicamentoFormActivity" />
+        <activity android:name=".MedicamentosActivity" />
+        <activity android:name=".CitasMedicasActivity" />
+        <activity android:name=".ConsejosSaludActivity" />
+
         <receiver android:name=".MedicationReminderReceiver"
             android:exported="true"
             android:permission="TODO" />
