@@ -18,4 +18,9 @@
         android:icon="@drawable/citas"
         android:title="@string/menu_citas"
         android:textColor="@color/button_text" />
+    <item
+        android:id="@+id/nav_perfil"
+        android:icon="@drawable/medicina"
+        android:title="@string/menu_citas"
+        android:textColor="@color/button_text" />
 </menu>
