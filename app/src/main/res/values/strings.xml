@@ -1,7 +1,7 @@
 <resources>
     <!-- App General -->
     <string name="app_name">Silver Digital</string>
-    <string name="medical_tips_header">Consejos Médicos</string>
+    <string name="medical_tips_header">Consejos De Salud</string>
     <string name="add_medicine">Agregar Medicamento</string>
     <string name="next_medicines">Próximos Medicamentos</string>
     <string name="next_medical_appointments">Próximas Citas Médicas</string>
