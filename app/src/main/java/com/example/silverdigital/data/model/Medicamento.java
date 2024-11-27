@@ -11,6 +11,8 @@ public class Medicamento {
     private String dosis;
     private String horario;
     private String observaciones;
+    private String frecuencia; // Frecuencia en horas
+    private String diasSemana; // Días de la semana seleccionados (separados por comas)
 
     // Getters y setters
     public int getId() { return id; }
@@ -23,5 +25,8 @@ public class Medicamento {
     public void setHorario(String horario) { this.horario = horario; }
     public String getObservaciones() { return observaciones; }
     public void setObservaciones(String observaciones) { this.observaciones = observaciones; }
-
+    public String getFrecuencia() { return frecuencia; }
+    public void setFrecuencia(String frecuencia) { this.frecuencia = frecuencia; }
+    public String getDiasSemana() { return diasSemana; }
+    public void setDiasSemana(String diasSemana) { this.diasSemana = diasSemana; }
 }

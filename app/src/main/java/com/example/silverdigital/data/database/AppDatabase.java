@@ -5,10 +5,12 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import android.content.Context;
 import com.example.silverdigital.data.model.Medicamento;
+import com.example.silverdigital.data.model.User;
 
-@Database(entities = {Medicamento.class}, version = 2) // Incrementa la versión
+@Database(entities = {Medicamento.class, User.class}, version = 7) // Incluye User y actualiza la versión
 public abstract class AppDatabase extends RoomDatabase {
-    public abstract MedicamentoDao medicamentoDao();
+    public abstract MedicamentoDao medicamentoDao(); // DAO para medicamentos
+    public abstract UserDao userDao(); // DAO para usuarios
 
     private static volatile AppDatabase INSTANCE;
 

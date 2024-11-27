@@ -2,20 +2,29 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"
         tools:ignore="ProtectedPermissions" />
 
     <application
         android:allowBackup="true"
+        android:banner="@drawable/medicina"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SilverDigital"
+        android:theme="@style/Theme.SilverDigital.Light"
         tools:targetApi="31">
+        <!-- Actividad principal para teléfonos -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -25,7 +34,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Actividad para televisores -->
+        <activity
+            android:name=".TVMainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.SilverDigital"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- Actividades adicionales -->
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".LoginActivity" />
         <activity android:name=".MedicamentoFormActivity" />
+        <activity android:name=".MedicamentosActivity" />
+        <activity android:name=".CitasMedicasActivity" />
+        <activity android:name=".ConsejosSaludActivity" />
+
         <receiver android:name=".MedicationReminderReceiver"
             android:exported="true"
             android:permission="TODO" />
