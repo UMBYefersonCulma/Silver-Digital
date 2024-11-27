@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources>
     <!-- Paleta Principal -->
     <color name="primary_color">#D12222</color> <!-- Rojo principal -->
@@ -42,7 +41,57 @@
     <color name="button_yellow">#FFF176</color>
     <color name="button_blue">#64B5F6</color>
     <color name="button_text">#FFFFFF</color>
+
+    <color name="main_box">#101A26</color>
+
+    <!-- Color para días de la semana -->
+    <color name="day_of_week_text">#F5F5F5</color> <!-- Texto blanco para días -->
 </resources>
+<!--<resources>-->
+<!--    &lt;!&ndash; Paleta Principal &ndash;&gt;-->
+<!--    <color name="primary_color">#D12222</color> &lt;!&ndash; Rojo principal &ndash;&gt;-->
+<!--    <color name="secondary_color">#50C878</color> &lt;!&ndash; Verde esmeralda &ndash;&gt;-->
+<!--    <color name="tertiary_color">#FFD700</color> &lt;!&ndash; Dorado brillante &ndash;&gt;-->
+<!--    <color name="quaternary_color">#34495E</color> &lt;!&ndash; Azul grisáceo &ndash;&gt;-->
+
+<!--    &lt;!&ndash; Colores de Fondo &ndash;&gt;-->
+<!--    <color name="background_color">#F4F9FF</color> &lt;!&ndash; Fondo claro azulado &ndash;&gt;-->
+<!--    <color name="background_dark">#1C2833</color> &lt;!&ndash; Fondo oscuro profundo &ndash;&gt;-->
+<!--    <color name="background_light">#ECF0F1</color> &lt;!&ndash; Fondo claro &ndash;&gt;-->
+
+<!--    &lt;!&ndash; Colores de Texto &ndash;&gt;-->
+<!--    <color name="primary_text">#2C3E50</color> &lt;!&ndash; Texto principal &ndash;&gt;-->
+<!--    <color name="secondary_text">#5D6D7E</color> &lt;!&ndash; Texto secundario &ndash;&gt;-->
+<!--    <color name="tertiary_text">#9E9E9E</color> &lt;!&ndash; Texto terciario &ndash;&gt;-->
+
+<!--    &lt;!&ndash; Colores de Botones &ndash;&gt;-->
+<!--    <color name="button_primary">#D12222</color> &lt;!&ndash; Botón principal &ndash;&gt;-->
+<!--    <color name="button_secondary">#50C878</color> &lt;!&ndash; Botón secundario &ndash;&gt;-->
+<!--    <color name="button_tertiary">#FFD700</color> &lt;!&ndash; Botón terciario &ndash;&gt;-->
+<!--    <color name="button_delete">#F44336</color> &lt;!&ndash; Botón eliminar &ndash;&gt;-->
+
+<!--    &lt;!&ndash; Colores de Fondo de Botones &ndash;&gt;-->
+<!--    <color name="button_background_primary">#E74C3C</color> &lt;!&ndash; Fondo botón principal &ndash;&gt;-->
+<!--    <color name="button_background_secondary">#50C878</color> &lt;!&ndash; Fondo botón secundario &ndash;&gt;-->
+<!--    <color name="button_background_tertiary">#FFD700</color> &lt;!&ndash; Fondo botón terciario &ndash;&gt;-->
+
+<!--    &lt;!&ndash; Colores de Accesibilidad &ndash;&gt;-->
+<!--    <color name="accessible_green">#27AE60</color> &lt;!&ndash; Verde accesible &ndash;&gt;-->
+<!--    <color name="accessible_red">#E74C3C</color> &lt;!&ndash; Rojo accesible &ndash;&gt;-->
+
+<!--    &lt;!&ndash; Colores Extras &ndash;&gt;-->
+<!--    <color name="white">#FFFFFF</color>-->
+<!--    <color name="black">#000000</color>-->
+<!--    <color name="gray">#BDC3C7</color> &lt;!&ndash; Gris claro &ndash;&gt;-->
+<!--    <color name="link_text">#03A9F4</color> &lt;!&ndash; Texto de enlace &ndash;&gt;-->
+<!--    <color name="button_red">#E57373</color>-->
+<!--    <color name="button_green">#81C784</color>-->
+<!--    <color name="button_yellow">#FFF176</color>-->
+<!--    <color name="button_blue">#64B5F6</color>-->
+<!--    <color name="button_text">#FFFFFF</color>-->
+
+<!--    <color name="main_box">#101A26</color>-->
+<!--</resources>-->
 
 <!--version 3-->
 <!--<resources>-->

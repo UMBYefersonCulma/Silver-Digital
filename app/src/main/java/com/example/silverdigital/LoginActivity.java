@@ -1,12 +1,14 @@
 package com.example.silverdigital;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.silverdigital.data.database.AppDatabase;
@@ -21,6 +23,16 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Verificar si hay una sesión activa
+        if (verificarSesionActiva()) {
+            // Si ya hay sesión activa, redirigir a MainActivity
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_login);
 
         // Vincular los elementos del diseño
@@ -54,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Aquí llamaremos a la base de datos para validar el login
+        // Llamar a la base de datos para validar el login
         autenticarUsuario(email, password);
     }
 
@@ -65,7 +77,9 @@ public class LoginActivity extends AppCompatActivity {
 
             runOnUiThread(() -> {
                 if (user != null) {
-                    // Login exitoso
+                    // Login exitoso: guardar los datos en SharedPreferences
+                    guardarSesionActiva(user);
+
                     Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
@@ -76,5 +90,19 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         }).start();
+    }
+
+    private void guardarSesionActiva(User user) {
+        SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("nombre", user.getName()); // Suponiendo que User tiene un campo 'nombre'
+        editor.putString("email", user.getEmail());
+        editor.putBoolean("isLoggedIn", true); // Marcar que el usuario está logueado
+        editor.apply();
+    }
+
+    private boolean verificarSesionActiva() {
+        SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        return prefs.getBoolean("isLoggedIn", false); // Si está logueado, devuelve true
     }
 }

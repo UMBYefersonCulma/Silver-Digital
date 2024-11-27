@@ -39,4 +39,12 @@
         <item name="buttonStyle">@style/ButtonStyles</item>
         <item name="materialButtonStyle">@style/MaterialButtonStyle</item>
     </style>
+
+    <style name="Theme.SilverDigital.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/background_dark</item>
+        <item name="colorPrimaryDark">@color/background_dark</item>
+        <item name="colorPrimaryVariant">@color/background_dark</item>
+        <item name="android:statusBarColor">@color/background_dark</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
 </resources>
