@@ -18,7 +18,7 @@
     </style>
 
     <!-- Estilo de los botones -->
-    <style name="ButtonStyle">
+    <style name="ButtonStyles" parent="Widget.MaterialComponents.Button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/rounded_button_background</item>
@@ -26,6 +26,7 @@
         <item name="android:padding">16dp</item>
         <item name="android:fontFamily">@font/roboto</item>
         <item name="android:textSize">18sp</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay</item>
     </style>
 
     <!-- Estilo del texto -->
@@ -33,6 +34,17 @@
         <item name="android:textColor">@color/primary_text</item>
         <item name="android:fontFamily">@font/roboto</item>
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <!-- Estilo para Material Buttons -->
+    <style name="MaterialButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/button_text</item>
+        <item name="backgroundTint">@color/button_background_primary</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="cornerRadius">8dp</item>
     </style>
 
     <!-- Estilo para los encabezados -->
@@ -48,5 +60,10 @@
         <item name="android:textColor">@color/secondary_text</item>
         <item name="android:fontFamily">@font/roboto</item>
         <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
     </style>
 </resources>

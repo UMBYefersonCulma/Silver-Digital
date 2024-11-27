@@ -1,7 +1,7 @@
 <resources>
     <!-- App General -->
     <string name="app_name">Silver Digital</string>
-    <string name="medical_tips_header">Consejos Médicos</string>
+    <string name="medical_tips_header">Consejos De Salud</string>
     <string name="add_medicine">Agregar Medicamento</string>
     <string name="next_medicines">Próximos Medicamentos</string>
     <string name="next_medical_appointments">Próximas Citas Médicas</string>
@@ -76,4 +76,14 @@
 
     <!-- Errors and Warnings -->
     <string name="error_no_data">No hay datos disponibles</string>
+
+    <!-- Días de la semana -->
+    <string name="monday">Lunes</string>
+    <string name="tuesday">Martes</string>
+    <string name="wednesday">Miércoles</string>
+    <string name="thursday">Jueves</string>
+    <string name="friday">Viernes</string>
+    <string name="saturday">Sábado</string>
+    <string name="sunday">Domingo</string>
+
 </resources>
