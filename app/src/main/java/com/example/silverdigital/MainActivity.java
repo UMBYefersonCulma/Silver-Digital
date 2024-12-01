@@ -8,6 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -45,13 +47,31 @@ public class MainActivity extends AppCompatActivity {
         btnConsejosSalud.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, ConsejosSaludActivity.class);
             startActivity(intent);
-            Toast.makeText(this, "Sección Consejos de Salud", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Sección Recomendaciones De Salud", Toast.LENGTH_SHORT).show();
         });
 
         LinearLayout perfilButton = findViewById(R.id.btnPerfil); // Asegúrate que este sea el ID del botón
         perfilButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, PerfilActivity.class);
             startActivity(intent);
+        });
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_home) {
+                startActivity(new Intent(this, MainActivity.class));
+            } else if (id == R.id.nav_medicamentos) {
+                startActivity(new Intent(this, MedicamentosActivity.class));
+            } else if (id == R.id.nav_citas) {
+                startActivity(new Intent(this, CitasMedicasActivity.class));
+            } else if (id == R.id.nav_consejos) {
+                startActivity(new Intent(this, ConsejosSaludActivity.class));
+            } else if (id == R.id.nav_perfil) {
+                startActivity(new Intent(this, PerfilActivity.class));
+            }
+            return true;
         });
     }
 }
