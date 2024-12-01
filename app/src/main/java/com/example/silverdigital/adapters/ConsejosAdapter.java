@@ -1,20 +1,29 @@
 package com.example.silverdigital.adapters;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import java.util.List;
+
 import com.example.silverdigital.R;
+
+import java.util.List;
 
 public class ConsejosAdapter extends RecyclerView.Adapter<ConsejosAdapter.ConsejosViewHolder> {
 
-    private final List<String> consejos;
+    private final List<String> consejosList;
+    private final List<String> urlList; // Lista de URLs
 
-    public ConsejosAdapter(List<String> consejos) {
-        this.consejos = consejos;
+    public ConsejosAdapter(List<String> consejosList, List<String> urlList) {
+        this.consejosList = consejosList;
+        this.urlList = urlList;
     }
 
     @NonNull
@@ -26,20 +35,31 @@ public class ConsejosAdapter extends RecyclerView.Adapter<ConsejosAdapter.Consej
 
     @Override
     public void onBindViewHolder(@NonNull ConsejosViewHolder holder, int position) {
-        holder.tvConsejo.setText(consejos.get(position));
+        String consejo = consejosList.get(position);
+        String url = urlList.get(position); // Obtén la URL correspondiente
+
+        holder.tvConsejo.setText(consejo);
+
+        // Configurar el clic en el botón
+        holder.btnEnlace.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            v.getContext().startActivity(intent);
+        });
     }
 
     @Override
     public int getItemCount() {
-        return consejos.size();
+        return consejosList.size();
     }
 
-    static class ConsejosViewHolder extends RecyclerView.ViewHolder {
+    public static class ConsejosViewHolder extends RecyclerView.ViewHolder {
         TextView tvConsejo;
+        ImageButton btnEnlace;
 
         public ConsejosViewHolder(@NonNull View itemView) {
             super(itemView);
             tvConsejo = itemView.findViewById(R.id.tvConsejo);
+            btnEnlace = itemView.findViewById(R.id.btnEnlace);
         }
     }
 }
