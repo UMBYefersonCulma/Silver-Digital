@@ -46,6 +46,7 @@
 
     <!-- Color para días de la semana -->
     <color name="day_of_week_text">#F5F5F5</color> <!-- Texto blanco para días -->
+    <color name="card_background">#3A3A3A</color>
 </resources>
 <!--<resources>-->
 <!--    &lt;!&ndash; Paleta Principal &ndash;&gt;-->
