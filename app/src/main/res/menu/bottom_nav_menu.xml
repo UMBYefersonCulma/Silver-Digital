@@ -2,13 +2,7 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/home"
-        android:title="@string/menu_home"
-        android:textColor="@color/button_text" />
-    <item
-        android:id="@+id/nav_consejos"
-        android:icon="@drawable/consejo"
-        android:title="Consejos"
-        android:textColor="@color/button_text" />
+        android:title="@string/menu_home" />
     <item
         android:id="@+id/nav_medicamentos"
         android:icon="@drawable/medicina"
@@ -16,11 +10,13 @@
     <item
         android:id="@+id/nav_citas"
         android:icon="@drawable/citas"
-        android:title="@string/menu_citas"
-        android:textColor="@color/button_text" />
+        android:title="@string/menu_citas" />
+    <item
+        android:id="@+id/nav_consejos"
+        android:icon="@drawable/consejo"
+        android:title="Consejos" />
     <item
         android:id="@+id/nav_perfil"
-        android:icon="@drawable/medicina"
-        android:title="@string/menu_citas"
-        android:textColor="@color/button_text" />
+        android:icon="@drawable/user"
+        android:title="Perfil" />
 </menu>

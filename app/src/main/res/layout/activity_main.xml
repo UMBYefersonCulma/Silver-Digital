@@ -51,12 +51,12 @@
             android:gravity="center"
             android:textSize="@dimen/button_text_size" />
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/medicina"
-            android:contentDescription="Icono de medicamentos"
-            android:layout_marginStart="10dp" />
+<!--        <ImageView-->
+<!--            android:layout_width="24dp"-->
+<!--            android:layout_height="24dp"-->
+<!--            android:src="@drawable/medicina"-->
+<!--            android:contentDescription="Icono de medicamentos"-->
+<!--            android:layout_marginStart="10dp" />-->
     </LinearLayout>
 
     <!-- Botón Gestión de Citas Médicas -->
@@ -83,12 +83,12 @@
             android:gravity="center"
             android:textSize="16sp" />
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/citas"
-            android:contentDescription="Icono de citas médicas"
-            android:layout_marginStart="10dp" />
+<!--        <ImageView-->
+<!--            android:layout_width="24dp"-->
+<!--            android:layout_height="24dp"-->
+<!--            android:src="@drawable/citas"-->
+<!--            android:contentDescription="Icono de citas médicas"-->
+<!--            android:layout_marginStart="10dp" />-->
     </LinearLayout>
 
     <!-- Botón Recomendaciones de Salud -->
@@ -115,13 +115,13 @@
             android:gravity="center"
             android:textSize="16sp" />
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/consejo"
-            android:contentDescription="Icono de recomendaciones"
-            android:layout_marginStart="10dp"
-            />
+<!--        <ImageView-->
+<!--            android:layout_width="24dp"-->
+<!--            android:layout_height="24dp"-->
+<!--            android:src="@drawable/consejo"-->
+<!--            android:contentDescription="Icono de recomendaciones"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            />-->
     </LinearLayout>
 
     <!-- Botón Perfil -->
@@ -148,12 +148,12 @@
             android:gravity="center"
             android:textSize="16sp" />
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/medicina"
-            android:contentDescription="Icono de perfil"
-            android:layout_marginStart="10dp" />
+<!--        <ImageView-->
+<!--            android:layout_width="24dp"-->
+<!--            android:layout_height="24dp"-->
+<!--            android:src="@drawable/user"-->
+<!--            android:contentDescription="Icono de perfil"-->
+<!--            android:layout_marginStart="10dp" />-->
     </LinearLayout>
 
     <!-- Menú inferior -->
