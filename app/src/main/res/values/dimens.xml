@@ -18,4 +18,8 @@
     <dimen name="layout_height_btn">50dp</dimen>
     <dimen name="layout_margin_bottom_med">16dp</dimen> <!-- Fixed typo: botton to bottom -->
     <dimen name="textsize_med">20sp</dimen> <!-- Changed dp to sp for text size -->
+
+    <!-- Gestion de Citas Medicas-->
+    <dimen name="layout_width_calendario">0dp</dimen>
+    <dimen name="layout_height_calendario">3in</dimen>
 </resources>
