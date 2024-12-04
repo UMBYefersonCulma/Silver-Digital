@@ -294,29 +294,14 @@ public class MedicamentoFormActivity extends AppCompatActivity {
         calendar.set(Calendar.MINUTE, minuto);
         calendar.set(Calendar.SECOND, 0);
 
-        // --- Notificación principal ---
-        Intent mainIntent = new Intent(this, MedicationReminderReceiver.class);
-        mainIntent.putExtra("medicamentoId", medicamento.getId());
-        mainIntent.putExtra("nombre", medicamento.getNombre()); // Nombre del medicamento
-
-        PendingIntent mainPendingIntent = PendingIntent.getBroadcast(
-                this,
-                medicamento.getId(), // ID único para la notificación principal
-                mainIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-        );
-
-        if (alarmManager != null) {
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), mainPendingIntent);
-        }
-
         // --- Notificación anticipada (2 minutos antes) ---
         Calendar reminderCalendar = (Calendar) calendar.clone();
         reminderCalendar.add(Calendar.MINUTE, -2); // 2 minutos antes
 
         Intent reminderIntent = new Intent(this, MedicationReminderReceiver.class);
         reminderIntent.putExtra("medicamentoId", medicamento.getId());
-        reminderIntent.putExtra("nombre", medicamento.getNombre()); // Nombre del medicamento
+        reminderIntent.putExtra("nombre", medicamento.getNombre());
+        reminderIntent.putExtra("tipoNotificacion", "anticipada"); // Tipo de notificación
 
         PendingIntent reminderPendingIntent = PendingIntent.getBroadcast(
                 this,
@@ -329,8 +314,25 @@ public class MedicamentoFormActivity extends AppCompatActivity {
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, reminderCalendar.getTimeInMillis(), reminderPendingIntent);
         }
 
+        // --- Notificación principal ---
+        Intent mainIntent = new Intent(this, MedicationReminderReceiver.class);
+        mainIntent.putExtra("medicamentoId", medicamento.getId());
+        mainIntent.putExtra("nombre", medicamento.getNombre());
+        mainIntent.putExtra("tipoNotificacion", "principal"); // Tipo de notificación
+
+        PendingIntent mainPendingIntent = PendingIntent.getBroadcast(
+                this,
+                medicamento.getId(), // ID único para la notificación principal
+                mainIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+
+        if (alarmManager != null) {
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), mainPendingIntent);
+        }
+
         // Logs para depuración
-        Log.d("programarRecordatorio", "Notificación principal programada para: " + calendar.getTime());
         Log.d("programarRecordatorio", "Notificación anticipada programada para: " + reminderCalendar.getTime());
+        Log.d("programarRecordatorio", "Notificación principal programada para: " + calendar.getTime());
     }
 }

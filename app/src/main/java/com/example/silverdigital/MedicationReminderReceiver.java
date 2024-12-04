@@ -16,28 +16,36 @@ public class MedicationReminderReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         int medicamentoId = intent.getIntExtra("medicamentoId", -1);
         String nombreMedicamento = intent.getStringExtra("nombre");
-        boolean esAnticipado = intent.getBooleanExtra("esAnticipado", false);
+        String tipoNotificacion = intent.getStringExtra("tipoNotificacion"); // "anticipada" o "principal"
 
-        if (medicamentoId == -1 || nombreMedicamento == null) {
+        if (medicamentoId == -1 || nombreMedicamento == null || tipoNotificacion == null) {
             Log.e("MedicationReminder", "Datos inválidos para el medicamento.");
             return;
         }
 
         // Obtenemos SharedPreferences para verificar y actualizar el estado de las notificaciones
         SharedPreferences preferences = context.getSharedPreferences("MedicationPrefs", Context.MODE_PRIVATE);
-        String key = "notificacion_" + medicamentoId;
+        String keyAnticipada = "notificacion_anticipada_" + medicamentoId;
 
-        boolean yaNotificado = preferences.getBoolean(key, false);
+        if (tipoNotificacion.equals("anticipada")) {
+            boolean yaNotificado = preferences.getBoolean(keyAnticipada, false);
 
-        // Si es una notificación anticipada y ya se envió, no hacemos nada
-        if (esAnticipado && yaNotificado) {
-            Log.d("MedicationReminder", "Notificación anticipada ya enviada para: " + nombreMedicamento);
-            return;
+            // Si ya se envió la notificación anticipada, no hacemos nada
+            if (yaNotificado) {
+                Log.d("MedicationReminder", "Notificación anticipada ya enviada para: " + nombreMedicamento);
+                return;
+            }
+
+            // Marcar la notificación anticipada como enviada
+            preferences.edit().putBoolean(keyAnticipada, true).apply();
+        } else if (tipoNotificacion.equals("principal")) {
+            // Reseteamos el estado para la notificación anticipada al enviar la notificación principal
+            preferences.edit().remove(keyAnticipada).apply();
         }
-        boolean tes = false;
+
         // Crear el texto de la notificación
-        String contenidoTexto = esAnticipado
-                ? "Pronto debes tomar tu medicina: " + nombreMedicamento
+        String contenidoTexto = tipoNotificacion.equals("anticipada")
+                ? "En 2 minutos debes tomar tu medicina: " + nombreMedicamento
                 : "Es hora de tomar tu medicina: " + nombreMedicamento;
 
         // Crear la intención para abrir la aplicación
@@ -64,14 +72,12 @@ public class MedicationReminderReceiver extends BroadcastReceiver {
             notificationManager.notify(medicamentoId, builder.build());
         }
 
-        // Actualizamos el estado en SharedPreferences si es una notificación anticipada
-        if (esAnticipado) {
-            preferences.edit().putBoolean(key, true).apply();
+        // Logs para depuración
+        Log.d("MedicationReminder", "Notificación enviada: " + contenidoTexto);
+        if (tipoNotificacion.equals("anticipada")) {
             Log.d("MedicationReminder", "Estado actualizado para notificación anticipada: " + nombreMedicamento);
         } else {
-            // Si es la notificación exacta, reiniciamos el estado para futuras alarmas
-            preferences.edit().remove(key).apply();
-            Log.d("MedicationReminder", "Estado reseteado tras notificación exacta: " + nombreMedicamento);
+            Log.d("MedicationReminder", "Estado reseteado tras notificación principal: " + nombreMedicamento);
         }
     }
 }
