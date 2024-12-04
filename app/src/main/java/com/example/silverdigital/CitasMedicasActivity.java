@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,13 +14,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.silverdigital.adapters.CitasAdapter;
 import com.example.silverdigital.data.database.DatabaseHelper;
 import com.example.silverdigital.data.model.Appointment;
+import com.example.silverdigital.decorators.AppointmentDecorator;
+import com.example.silverdigital.decorators.TodayDecorator;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -38,7 +42,6 @@ public class CitasMedicasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_citas_medicas);
 
-        // Inicializar componentes de la UI
         rvAppointments = findViewById(R.id.rvAppointments);
         rvAppointments.setLayoutManager(new LinearLayoutManager(this));
 
@@ -54,18 +57,29 @@ public class CitasMedicasActivity extends AppCompatActivity {
 
         tvSubtitle = findViewById(R.id.tvSubtitle);
         calendarView = findViewById(R.id.calendarView);
+
         dbHelper = new DatabaseHelper(this);
 
-        // Cargar citas y resaltar fechas en el calendario
         loadAppointments();
+        calendarView.removeDecorators();
         highlightAppointmentsOnCalendar();
+        highlightToday();
+
+        // Listener para seleccionar fechas
+        calendarView.setOnDateChangedListener(onDateSelectedListener);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        loadAppointments(); // Recarga las citas al volver a la actividad
-        highlightAppointmentsOnCalendar(); // Actualiza el calendario
+        refreshAppointmentsAndCalendar();
+    }
+
+    private void refreshAppointmentsAndCalendar() {
+        loadAppointments(); // Recargar las citas en el RecyclerView
+        calendarView.removeDecorators();
+        highlightAppointmentsOnCalendar(); // Actualizar decoradores en el calendario
+        highlightToday(); // Asegurar que el día actual sigue destacado
     }
 
     private void loadAppointments() {
@@ -97,19 +111,15 @@ public class CitasMedicasActivity extends AppCompatActivity {
         for (Appointment appointment : citasList) {
             try {
                 Date appointmentDate = sdf.parse(appointment.getDate());
-                if (appointmentDate != null) {
 
-                    // Convertir Date a LocalDate
-                    java.util.Calendar calendar = java.util.Calendar.getInstance();
-                    calendar.setTime(appointmentDate);
-                    int year = calendar.get(java.util.Calendar.YEAR);
-                    int month = calendar.get(java.util.Calendar.MONTH) + 1; // Los meses en Calendar empiezan desde 0
-                    int day = calendar.get(java.util.Calendar.DAY_OF_MONTH);
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(appointmentDate);
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH) + 1; // Meses empiezan en 0
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-                    // Crear un objeto CalendarDay desde LocalDate
-                    CalendarDay calendarDay = CalendarDay.from(year, month, day);
-                    appointmentDates.add(calendarDay);
-                }
+                CalendarDay calendarDay = CalendarDay.from(year, month, day);
+                appointmentDates.add(calendarDay);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -117,30 +127,42 @@ public class CitasMedicasActivity extends AppCompatActivity {
 
         // Agregar decorador para las citas
         if (!appointmentDates.isEmpty()) {
-            calendarView.addDecorator(new AppointmentDecorator(appointmentDates));
+            calendarView.addDecorator(new AppointmentDecorator(this,appointmentDates)); // Días de citas en rojo
         }
     }
 
-    private Appointment getNextAppointment() {
-        Appointment next = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date today = new Date();
+    private void highlightToday() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // Meses empiezan en 0
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
 
+        CalendarDay today = CalendarDay.from(year, month, day);
+        calendarView.addDecorator(new TodayDecorator(this,today)); // Día actual en azul
+    }
+
+    private final OnDateSelectedListener onDateSelectedListener = (widget, date, selected) -> {
         for (Appointment appointment : citasList) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             try {
                 Date appointmentDate = sdf.parse(appointment.getDate());
-                if (appointmentDate != null && appointmentDate.after(today)) {
-                    if (next == null || appointmentDate.before(sdf.parse(next.getDate()))) {
-                        next = appointment;
-                    }
+                Calendar appointmentCalendar = Calendar.getInstance();
+                appointmentCalendar.setTime(appointmentDate);
+
+                if (appointmentCalendar.get(Calendar.YEAR) == date.getYear() &&
+                        appointmentCalendar.get(Calendar.MONTH) + 1 == date.getMonth() &&
+                        appointmentCalendar.get(Calendar.DAY_OF_MONTH) == date.getDay()) {
+                    // Coincide una cita, redirigir al menú de edición
+                    onAppointmentClicked(appointment);
+                    return;
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
 
-        return next;
-    }
+        Toast.makeText(this, "No hay citas en esta fecha", Toast.LENGTH_SHORT).show();
+    };
 
     private void onAppointmentClicked(Appointment cita) {
         Intent intent = new Intent(this, EditAppointmentActivity.class);
@@ -149,6 +171,16 @@ public class CitasMedicasActivity extends AppCompatActivity {
         intent.putExtra("specialty", cita.getSpecialty());
         intent.putExtra("date", cita.getDate());
         intent.putExtra("observations", cita.getObservations());
-        startActivity(intent);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            // Si se actualizó o eliminó una cita, recargar la vista
+            refreshAppointmentsAndCalendar();
+        }
     }
 }

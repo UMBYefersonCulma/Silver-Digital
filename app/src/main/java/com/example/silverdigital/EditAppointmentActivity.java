@@ -1,8 +1,8 @@
 package com.example.silverdigital;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -11,82 +11,86 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.silverdigital.data.database.DatabaseHelper;
 
+import java.util.Calendar;
+
 public class EditAppointmentActivity extends AppCompatActivity {
 
-    private EditText etDoctorName, etDate, etSpecialty, etObservations;
-    private Button btnSaveChanges, btnDeleteAppointment;
-    private int appointmentId; // Identificador único de la cita
+    private EditText etDoctorName, etSpecialty, etObservations;
+    private Button btnSaveChanges, btnDeleteAppointment, btnDatePicker;
+    private int appointmentId;
     private DatabaseHelper dbHelper;
+    private Calendar selectedDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_appointment);
 
-        // Inicializar UI y base de datos
         etDoctorName = findViewById(R.id.etDoctorName);
-        etDate = findViewById(R.id.etDate);
         etSpecialty = findViewById(R.id.etSpecialty);
         etObservations = findViewById(R.id.etObservations);
         btnSaveChanges = findViewById(R.id.btnSaveChanges);
         btnDeleteAppointment = findViewById(R.id.btnDeleteAppointment);
+        btnDatePicker = findViewById(R.id.btnDatePicker);
+
         dbHelper = new DatabaseHelper(this);
 
-        // Obtener datos de la cita desde el Intent
         Intent intent = getIntent();
-        if (intent != null) {
-            appointmentId = intent.getIntExtra("appointment_id", -1); // ID de la cita
-            String doctorName = intent.getStringExtra("doctor_name");
-            String specialty = intent.getStringExtra("specialty");
-            String date = intent.getStringExtra("date");
-            String observations = intent.getStringExtra("observations");
+        appointmentId = intent.getIntExtra("appointment_id", -1);
+        etDoctorName.setText(intent.getStringExtra("doctor_name"));
+        etSpecialty.setText(intent.getStringExtra("specialty"));
+        btnDatePicker.setText(intent.getStringExtra("date"));
+        etObservations.setText(intent.getStringExtra("observations"));
 
-            // Debug: Verificar datos recibidos
-            Log.d("EditAppointmentActivity", "Datos recibidos: ID=" + appointmentId +
-                    ", Doctor=" + doctorName + ", Specialty=" + specialty +
-                    ", Fecha=" + date + ", Observaciones=" + observations);
+        btnDatePicker.setOnClickListener(v -> showDatePickerDialog());
 
-            // Establecer los valores en los campos si no son nulos
-            if (doctorName != null) etDoctorName.setText(doctorName);
-            if (specialty != null) etSpecialty.setText(specialty);
-            if (date != null) etDate.setText(date);
-            if (observations != null) etObservations.setText(observations);
+        btnSaveChanges.setOnClickListener(v -> saveAppointmentChanges());
+        btnDeleteAppointment.setOnClickListener(v -> deleteAppointment());
+    }
+
+    private void showDatePickerDialog() {
+        Calendar calendar = Calendar.getInstance();
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                (view, year, month, dayOfMonth) -> {
+                    selectedDate = Calendar.getInstance();
+                    selectedDate.set(year, month, dayOfMonth);
+                    btnDatePicker.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
+    }
+
+    private void saveAppointmentChanges() {
+        String doctorName = etDoctorName.getText().toString();
+        String specialty = etSpecialty.getText().toString();
+        String observations = etObservations.getText().toString();
+        String date = btnDatePicker.getText().toString();
+
+        btnDatePicker.setText(date);
+
+        if (doctorName.isEmpty() || specialty.isEmpty() || observations.isEmpty() || selectedDate == null) {
+            Toast.makeText(this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        // Guardar cambios
-        btnSaveChanges.setOnClickListener(v -> {
-            String updatedDoctorName = etDoctorName.getText().toString();
-            String updatedSpecialty = etSpecialty.getText().toString();
-            String updatedDate = etDate.getText().toString();
-            String updatedObservations = etObservations.getText().toString();
+        int result = dbHelper.updateCita(appointmentId, doctorName, specialty, date, observations);
+        if (result > 0) {
+            Toast.makeText(this, "Cita actualizada correctamente", Toast.LENGTH_SHORT).show();
+            finish();
+        } else {
+            Toast.makeText(this, "Error al actualizar la cita", Toast.LENGTH_SHORT).show();
+        }
+    }
 
-            if (updatedDoctorName.isEmpty() || updatedSpecialty.isEmpty() || updatedDate.isEmpty() || updatedObservations.isEmpty()) {
-                Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
-            } else {
-                int result = dbHelper.updateCita(appointmentId, updatedDoctorName, updatedSpecialty, updatedDate, updatedObservations);
-                if (result > 0) {
-                    Toast.makeText(this, "Cita actualizada correctamente", Toast.LENGTH_SHORT).show();
-                    Intent resultIntent = new Intent();
-                    setResult(RESULT_OK, resultIntent);
-                    finish();
-                } else {
-                    Toast.makeText(this, "Error al actualizar la cita", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        // Eliminar cita
-        btnDeleteAppointment.setOnClickListener(v -> {
-            int result = dbHelper.deleteCita(appointmentId);
-            if (result > 0) {
-                Toast.makeText(this, "Cita eliminada correctamente", Toast.LENGTH_SHORT).show();
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("delete", true);
-                setResult(RESULT_OK, resultIntent);
-                finish();
-            } else {
-                Toast.makeText(this, "Error al eliminar la cita", Toast.LENGTH_SHORT).show();
-            }
-        });
+    private void deleteAppointment() {
+        int result = dbHelper.deleteCita(appointmentId);
+        if (result > 0) {
+            Toast.makeText(this, "Cita eliminada correctamente", Toast.LENGTH_SHORT).show();
+            finish();
+        } else {
+            Toast.makeText(this, "Error al eliminar la cita", Toast.LENGTH_SHORT).show();
+        }
     }
 }

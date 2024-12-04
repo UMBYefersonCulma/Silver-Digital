@@ -48,6 +48,9 @@
     <color name="day_of_week_text">#F5F5F5</color> <!-- Texto blanco para días -->
     <color name="card_background">#3A3A3A</color>
     <color name="hint_text">#9E9E9E</color> <!-- Gris claro -->
+
+    <color name="red">#E74C3C</color>
+    <color name="green">#27AE60</color>
 </resources>
 <!--<resources>-->
 <!--    &lt;!&ndash; Paleta Principal &ndash;&gt;-->
