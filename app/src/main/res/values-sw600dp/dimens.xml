@@ -27,4 +27,8 @@
     <dimen name="layout_height_btn">50dp</dimen>
     <dimen name="layout_margin_bottom_med">12dp</dimen>
     <dimen name="textsize_med">18sp</dimen>
+
+    <!-- Gestion de Citas Medicas-->
+    <dimen name="layout_width_calendario">1.5in</dimen>
+    <dimen name="layout_height_calendario">1.5in</dimen>
 </resources>

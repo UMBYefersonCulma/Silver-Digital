@@ -61,6 +61,10 @@
             android:theme="@style/Theme.SilverDigital" />
         <activity android:name=".PerfilActivity"
             android:theme="@style/Theme.SilverDigital.Dark" />
+        <activity android:name=".AddAppointmentActivity"
+            android:theme="@style/Theme.SilverDigital.Dark"/>
+        <activity android:name=".EditAppointmentActivity"
+            android:theme="@style/Theme.SilverDigital.Dark"/>
 
         <receiver android:name=".MedicationReminderReceiver"
             android:exported="true"
