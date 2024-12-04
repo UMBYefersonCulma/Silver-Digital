@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/background_light">
+    android:background="#101A26">
 
     <!-- Título de la sección -->
     <TextView
@@ -15,7 +15,7 @@
         android:textSize="22sp"
         android:textStyle="bold"
         android:layout_gravity="center"
-        android:textColor="@color/primary_text"
+        android:textColor="@color/white"
         android:paddingBottom="16dp" />
 
     <!-- Contenedor para los medicamentos -->
@@ -25,7 +25,7 @@
         android:layout_weight="1"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
-        android:backgroundTint="@color/secondary_color"
+        android:backgroundTint="#1C2833"
         android:padding="8dp">
 
         <androidx.viewpager2.widget.ViewPager2

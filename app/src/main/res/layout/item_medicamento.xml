@@ -1,34 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="8dp"
-    android:layout_margin="4dp"
-    android:background="@drawable/rounded_background">
+    android:background="@color/background_dark">
 
     <TextView
         android:id="@+id/tvNombre"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/medicine_name"
+        android:text="Nombre del medicamento"
         android:textStyle="bold"
-        android:textSize="16sp"
-        android:textColor="@color/primary_text" />
+        android:textColor="@color/black"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/tvDosis"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/medicine_dosage"
-        android:textSize="14sp"
-        android:textColor="@color/secondary_text" />
+        android:text="Dosis: 10mg"
+        android:textColor="@color/gray"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tvHorario"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/medicine_schedule"
-        android:textSize="14sp"
-        android:textColor="@color/secondary_text" />
+        android:text="Horario: 10:30"
+        android:textColor="@color/gray"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvFrecuencia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Frecuencia: Cada 8 horas"
+        android:textColor="@color/gray"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvDiasSemana"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Días: Lunes, Miércoles, Viernes"
+        android:textColor="@color/gray"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvObservaciones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Observaciones: Tomar después de las comidas"
+        android:textColor="@color/gray"
+        android:textSize="14sp" />
 </LinearLayout>

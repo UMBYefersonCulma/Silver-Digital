@@ -42,7 +42,15 @@ public class MedicamentoPagerAdapter extends RecyclerView.Adapter<MedicamentoPag
         // Configurar Medicamento 1
         if (grupo.size() > 0) {
             Medicamento medicamento1 = grupo.get(0);
-            setMedicamentoData(holder.tvNombreMedicamento1, holder.tvDosisMedicamento1, holder.tvHorarioMedicamento1, holder.tvObservaciones1, medicamento1);
+            setMedicamentoData(
+                    holder.tvNombreMedicamento1,
+                    holder.tvDosisMedicamento1,
+                    holder.tvHorarioMedicamento1,
+                    holder.tvFrecuenciaMedicamento1,
+                    holder.tvDiasSemanaMedicamento1,
+                    holder.tvObservaciones1,
+                    medicamento1
+            );
 
             holder.linearLayoutMedicamento1.setVisibility(View.VISIBLE);
             holder.linearLayoutMedicamento1.setOnClickListener(v -> abrirMenuEdicion(context, medicamento1));
@@ -53,7 +61,15 @@ public class MedicamentoPagerAdapter extends RecyclerView.Adapter<MedicamentoPag
         // Configurar Medicamento 2 (si existe)
         if (grupo.size() > 1) {
             Medicamento medicamento2 = grupo.get(1);
-            setMedicamentoData(holder.tvNombreMedicamento2, holder.tvDosisMedicamento2, holder.tvHorarioMedicamento2, holder.tvObservaciones2, medicamento2);
+            setMedicamentoData(
+                    holder.tvNombreMedicamento2,
+                    holder.tvDosisMedicamento2,
+                    holder.tvHorarioMedicamento2,
+                    holder.tvFrecuenciaMedicamento2,
+                    holder.tvDiasSemanaMedicamento2,
+                    holder.tvObservaciones2,
+                    medicamento2
+            );
 
             holder.linearLayoutMedicamento2.setVisibility(View.VISIBLE);
             holder.linearLayoutMedicamento2.setOnClickListener(v -> abrirMenuEdicion(context, medicamento2));
@@ -77,6 +93,8 @@ public class MedicamentoPagerAdapter extends RecyclerView.Adapter<MedicamentoPag
         intent.putExtra("nombre", medicamento.getNombre());
         intent.putExtra("dosis", medicamento.getDosis());
         intent.putExtra("horario", medicamento.getHorario());
+        intent.putExtra("frecuencia", medicamento.getFrecuencia());
+        intent.putExtra("diasSemana", medicamento.getDiasSemana());
         intent.putExtra("observaciones", medicamento.getObservaciones());
         context.startActivity(intent);
     }
@@ -96,7 +114,15 @@ public class MedicamentoPagerAdapter extends RecyclerView.Adapter<MedicamentoPag
     /**
      * Configurar los datos del medicamento en las vistas.
      */
-    private void setMedicamentoData(TextView tvNombre, TextView tvDosis, TextView tvHorario, TextView tvObservaciones, Medicamento medicamento) {
+    private void setMedicamentoData(
+            TextView tvNombre,
+            TextView tvDosis,
+            TextView tvHorario,
+            TextView tvFrecuencia,
+            TextView tvDiasSemana,
+            TextView tvObservaciones,
+            Medicamento medicamento
+    ) {
         if (medicamento == null) {
             Log.e("MedicamentoPagerAdapter", "El medicamento es nulo.");
             return;
@@ -105,6 +131,8 @@ public class MedicamentoPagerAdapter extends RecyclerView.Adapter<MedicamentoPag
         tvNombre.setText(medicamento.getNombre() != null ? medicamento.getNombre() : "Nombre no disponible");
         tvDosis.setText(medicamento.getDosis() != null ? "Dosis: " + medicamento.getDosis() : "Dosis no disponible");
         tvHorario.setText(medicamento.getHorario() != null ? "Horario: " + medicamento.getHorario() : "Horario no disponible");
+        tvFrecuencia.setText(medicamento.getFrecuencia() != null ? "Frecuencia: " + medicamento.getFrecuencia() : "Frecuencia no disponible");
+        tvDiasSemana.setText(medicamento.getDiasSemana() != null ? "Días: " + medicamento.getDiasSemana() : "Días no disponibles");
         tvObservaciones.setText(medicamento.getObservaciones() != null ? "Observaciones: " + medicamento.getObservaciones() : "Observaciones no disponibles");
     }
 
@@ -113,11 +141,11 @@ public class MedicamentoPagerAdapter extends RecyclerView.Adapter<MedicamentoPag
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // Vistas del Medicamento 1
-        TextView tvNombreMedicamento1, tvDosisMedicamento1, tvHorarioMedicamento1, tvObservaciones1;
+        TextView tvNombreMedicamento1, tvDosisMedicamento1, tvHorarioMedicamento1, tvFrecuenciaMedicamento1, tvDiasSemanaMedicamento1, tvObservaciones1;
         View linearLayoutMedicamento1;
 
         // Vistas del Medicamento 2
-        TextView tvNombreMedicamento2, tvDosisMedicamento2, tvHorarioMedicamento2, tvObservaciones2;
+        TextView tvNombreMedicamento2, tvDosisMedicamento2, tvHorarioMedicamento2, tvFrecuenciaMedicamento2, tvDiasSemanaMedicamento2, tvObservaciones2;
         View linearLayoutMedicamento2;
 
         public ViewHolder(@NonNull View itemView) {
@@ -126,12 +154,16 @@ public class MedicamentoPagerAdapter extends RecyclerView.Adapter<MedicamentoPag
             tvNombreMedicamento1 = itemView.findViewById(R.id.tvNombreMedicamento1);
             tvDosisMedicamento1 = itemView.findViewById(R.id.tvDosisMedicamento1);
             tvHorarioMedicamento1 = itemView.findViewById(R.id.tvHorarioMedicamento1);
+            tvFrecuenciaMedicamento1 = itemView.findViewById(R.id.tvFrecuenciaMedicamento1);
+            tvDiasSemanaMedicamento1 = itemView.findViewById(R.id.tvDiasSemanaMedicamento1);
             tvObservaciones1 = itemView.findViewById(R.id.tvObservaciones1);
             linearLayoutMedicamento1 = itemView.findViewById(R.id.linearLayoutMedicamento1);
 
             tvNombreMedicamento2 = itemView.findViewById(R.id.tvNombreMedicamento2);
             tvDosisMedicamento2 = itemView.findViewById(R.id.tvDosisMedicamento2);
             tvHorarioMedicamento2 = itemView.findViewById(R.id.tvHorarioMedicamento2);
+            tvFrecuenciaMedicamento2 = itemView.findViewById(R.id.tvFrecuenciaMedicamento2);
+            tvDiasSemanaMedicamento2 = itemView.findViewById(R.id.tvDiasSemanaMedicamento2);
             tvObservaciones2 = itemView.findViewById(R.id.tvObservaciones2);
             linearLayoutMedicamento2 = itemView.findViewById(R.id.linearLayoutMedicamento2);
         }

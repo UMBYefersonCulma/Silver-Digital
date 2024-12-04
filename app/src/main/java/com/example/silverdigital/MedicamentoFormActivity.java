@@ -9,9 +9,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,9 +28,11 @@ import java.util.Locale;
 public class MedicamentoFormActivity extends AppCompatActivity {
 
     private EditText etNombre, etDosis, etHorario, etObservaciones;
+    private Spinner spinnerFrecuencia;
     private Button btnGuardar, btnEliminar;
     private int medicamentoId = -1;
     private CheckBox checkLunes, checkMartes, checkMiercoles, checkJueves, checkViernes, checkSabado, checkDomingo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,22 +55,20 @@ public class MedicamentoFormActivity extends AppCompatActivity {
         checkSabado = findViewById(R.id.check_sabado);
         checkDomingo = findViewById(R.id.check_domingo);
 
-        // Encuentra el EditText
-        EditText editText = findViewById(R.id.etObservaciones);
+        // Spinner de frecuencia
+        spinnerFrecuencia = findViewById(R.id.spinner_frecuencia);
 
-        // Obtén el valor de min_lines del archivo dimens
-        int minLines = getResources().getInteger(R.integer.min_lines);
-        editText.setMinLines(minLines);
+        // Configurar opciones del spinner
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.frecuencia_opciones, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerFrecuencia.setAdapter(adapter);
 
-        // Asigna el valor al EditText
-        editText.setMinLines(minLines);
-
-        // Obtener si estamos editando o creando
         boolean isEditing = getIntent().getBooleanExtra("isEditing", false);
 
         // Verificar si estamos editando un medicamento existente
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("medicamentoId")&&isEditing) {
+        if (intent != null && intent.hasExtra("medicamentoId") && isEditing) {
             titulo.setText("Edición de Medicina");
             btnEliminar.setVisibility(View.VISIBLE);
 
@@ -75,31 +77,37 @@ public class MedicamentoFormActivity extends AppCompatActivity {
             String dosis = intent.getStringExtra("dosis");
             String horario = intent.getStringExtra("horario");
             String observaciones = intent.getStringExtra("observaciones");
+            String diasSemana = intent.getStringExtra("diasSemana");
+            String frecuencia = intent.getStringExtra("frecuencia");
 
             // Mostrar los datos en los campos de edición
             etNombre.setText(nombre);
             etDosis.setText(dosis);
             etHorario.setText(horario);
             etObservaciones.setText(observaciones);
-        }else {
+
+            // Seleccionar días de la semana
+            marcarDiasSeleccionados(diasSemana);
+
+            // Seleccionar frecuencia
+            if (frecuencia != null) {
+                int spinnerPosition = adapter.getPosition(frecuencia);
+                spinnerFrecuencia.setSelection(spinnerPosition);
+            }
+        } else {
             // Modo creación
             titulo.setText("Crear Nueva Medicina");
             btnEliminar.setVisibility(View.GONE);
 
-            // Asegurarse de limpiar los campos
             etNombre.setText("");
             etDosis.setText("");
             etHorario.setText("");
             etObservaciones.setText("");
         }
 
-
         btnGuardar.setOnClickListener(v -> guardarMedicamento());
-
-        // Configurar el clic en etHorario para abrir el TimePickerDialog
         etHorario.setOnClickListener(v -> mostrarTimePicker());
 
-        // Configurar el botón de eliminar (si estamos editando)
         if (medicamentoId != -1) {
             btnEliminar.setOnClickListener(v -> eliminarMedicamento());
             btnEliminar.setEnabled(true);
@@ -127,6 +135,18 @@ public class MedicamentoFormActivity extends AppCompatActivity {
         timePickerDialog.show();
     }
 
+    private void marcarDiasSeleccionados(String diasSemana) {
+        if (diasSemana == null) return;
+
+        if (diasSemana.contains("Lunes")) checkLunes.setChecked(true);
+        if (diasSemana.contains("Martes")) checkMartes.setChecked(true);
+        if (diasSemana.contains("Miércoles")) checkMiercoles.setChecked(true);
+        if (diasSemana.contains("Jueves")) checkJueves.setChecked(true);
+        if (diasSemana.contains("Viernes")) checkViernes.setChecked(true);
+        if (diasSemana.contains("Sábado")) checkSabado.setChecked(true);
+        if (diasSemana.contains("Domingo")) checkDomingo.setChecked(true);
+    }
+
     private void guardarMedicamento() {
         // Obtener valores de los campos
         String nombre = etNombre.getText().toString().trim();
@@ -134,11 +154,18 @@ public class MedicamentoFormActivity extends AppCompatActivity {
         String horario = etHorario.getText().toString().trim();
         String observaciones = etObservaciones.getText().toString().trim();
         String diasSeleccionados = obtenerDiasSeleccionados();
+        String frecuencia = spinnerFrecuencia.getSelectedItem().toString();
 
         // Validar que todos los campos estén completos
-        if (nombre.isEmpty() || dosis.isEmpty() || horario.isEmpty() || observaciones.isEmpty() || diasSeleccionados.isEmpty()) {
+        if (nombre.isEmpty() || dosis.isEmpty() || horario.isEmpty() || observaciones.isEmpty() || diasSeleccionados.isEmpty() || frecuencia.isEmpty()) {
             Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
             return;
+        }
+        if (spinnerFrecuencia != null) {
+            String frecuenciaSeleccionada = spinnerFrecuencia.getSelectedItem().toString();
+            // Guarda la frecuencia o realiza operaciones con ella.
+        } else {
+            Log.e("MedicamentoFormActivity", "spinnerFrecuencia es null");
         }
 
         // Obtener instancia de la base de datos
@@ -155,6 +182,7 @@ public class MedicamentoFormActivity extends AppCompatActivity {
                 medicamento.setHorario(horario);
                 medicamento.setObservaciones(observaciones);
                 medicamento.setDiasSemana(diasSeleccionados);
+                medicamento.setFrecuencia(frecuencia);
 
                 // Insertar en la base de datos
                 db.medicamentoDao().insertar(medicamento);
@@ -167,6 +195,7 @@ public class MedicamentoFormActivity extends AppCompatActivity {
                     medicamento.setHorario(horario);
                     medicamento.setObservaciones(observaciones);
                     medicamento.setDiasSemana(diasSeleccionados);
+                    medicamento.setFrecuencia(frecuencia);
 
                     // Actualizar en la base de datos
                     db.medicamentoDao().actualizar(medicamento);

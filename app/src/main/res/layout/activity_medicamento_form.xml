@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_dark">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="832dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/top_margin_med"
-        android:padding="16dp">
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.85"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.85">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/top_margin_med_top"
-            android:layout_marginBottom="50dp"
             android:background="@drawable/rounded_edittext"
             android:orientation="vertical"
-            android:padding="@dimen/padding_med">
+            android:padding="16dp">
 
             <!-- Título -->
             <TextView
@@ -31,7 +33,7 @@
                 android:layout_marginBottom="20dp"
                 android:text="@string/medicine_edit_title"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_title_med"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <!-- Campo Nombre -->
@@ -39,13 +41,12 @@
                 android:id="@+id/etNombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/padding_edittext"
+                android:layout_marginBottom="12dp"
                 android:background="@drawable/rounded_edit_text"
                 android:hint="@string/medicine_name_hint"
-                android:padding="@dimen/padding_edittext"
+                android:padding="12dp"
                 android:textColor="@color/black"
-                android:textColorHint="@color/secondary_text"
-                android:textSize="@dimen/text_med"/>
+                android:textColorHint="@color/secondary_text" />
 
             <!-- Campo Dosis -->
             <EditText
@@ -56,10 +57,9 @@
                 android:background="@drawable/rounded_edit_text"
                 android:hint="@string/dose_hint"
                 android:inputType="number"
-                android:padding="@dimen/padding_edittext"
+                android:padding="12dp"
                 android:textColor="@color/black"
-                android:textColorHint="@color/secondary_text"
-                android:textSize="@dimen/text_med"/>
+                android:textColorHint="@color/secondary_text" />
 
             <!-- Campo Horario -->
             <EditText
@@ -71,12 +71,11 @@
                 android:clickable="true"
                 android:focusable="false"
                 android:hint="@string/time_hint"
-                android:padding="@dimen/padding_edittext"
+                android:padding="12dp"
                 android:textColor="@color/black"
-                android:textColorHint="@color/secondary_text"
-                android:textSize="@dimen/text_med"/>
+                android:textColorHint="@color/secondary_text" />
 
-            <!-- Spinner de frecuencia -->
+            <!-- Spinner Frecuencia -->
             <Spinner
                 android:id="@+id/spinner_frecuencia"
                 android:layout_width="match_parent"
@@ -84,24 +83,21 @@
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/rounded_edit_text"
                 android:entries="@array/frecuencia_opciones"
-                android:padding="@dimen/padding_edittext"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_med"/>
+                android:padding="12dp" />
 
-            <!-- Días de la semana -->
+            <!-- Días de la Semana -->
             <TextView
+                android:id="@+id/tvDiasSemana"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
-                android:textSize="@dimen/textsize_med"
-                android:text="Selecciona los días de la semana"
+                android:text="Selecciona los días"
                 android:textColor="@color/white" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/layout_margin_bottom_med"
+                android:layout_marginBottom="16dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -171,38 +167,30 @@
                 android:background="@drawable/rounded_edit_text"
                 android:hint="@string/observations_hint"
                 android:inputType="textMultiLine"
-                android:minLines="@integer/min_lines"
-                android:padding="@dimen/padding_edittext"
+                android:minLines="3"
+                android:padding="12dp"
                 android:textColor="@color/black"
-                android:textColorHint="@color/secondary_text"
-                android:textSize="@dimen/text_med"/>
+                android:textColorHint="@color/secondary_text" />
 
             <!-- Botón Guardar -->
             <Button
                 android:id="@+id/btnGuardar"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/layout_height_btn"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/rounded_button_background"
-                android:padding="@dimen/padding_btn_guardar"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/rounded_button_green"
                 android:text="@string/save"
-                android:textColor="@color/button_text"
-                android:textSize="18sp"
-                android:layout_marginBottom="10dp"/>
+                android:textColor="@color/white" />
 
             <!-- Botón Eliminar -->
             <Button
                 android:id="@+id/btnEliminar"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/layout_height_btn"
-                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
                 android:background="@drawable/rounded_button_red"
-                android:padding="@dimen/padding_btn_guardar"
                 android:text="@string/delete"
-                android:textColor="@color/button_text"
-                android:textSize="18sp" />
-
+                android:textColor="@color/white" />
 
         </LinearLayout>
     </ScrollView>
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
