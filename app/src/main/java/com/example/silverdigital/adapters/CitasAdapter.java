@@ -1,45 +1,74 @@
 package com.example.silverdigital.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import java.util.List;
+
 import com.example.silverdigital.R;
+import com.example.silverdigital.data.model.Appointment;
 
-public class CitasAdapter extends RecyclerView.Adapter<CitasAdapter.CitasViewHolder> {
+import java.util.List;
 
-    private final List<String> citas;
+public class CitasAdapter extends RecyclerView.Adapter<CitasAdapter.ViewHolder> {
 
-    public CitasAdapter(List<String> citas) {
-        this.citas = citas;
+    private final List<Appointment> citasList;
+    private final OnAppointmentClickListener listener;
+
+    public interface OnAppointmentClickListener {
+        void onAppointmentClicked(Appointment cita);
+    }
+
+    public CitasAdapter(List<Appointment> citasList, OnAppointmentClickListener listener) {
+        this.citasList = citasList;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
-    public CitasViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cita, parent, false);
-        return new CitasViewHolder(view);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_appointment, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CitasViewHolder holder, int position) {
-        holder.tvCita.setText(citas.get(position));
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Appointment cita = citasList.get(position);
+
+        // Valida los valores antes de asignarlos
+        String doctorName = cita.getDoctorName() != null ? cita.getDoctorName() : "Sin Nombre";
+        String date = cita.getDate() != null ? cita.getDate() : "Sin Fecha";
+
+        // Log de depuración
+        Log.d("CitasAdapter", "Cargando cita: ID=" + cita.getId() + ", Doctor=" + doctorName + ", Fecha=" + date);
+
+        // Configurar los valores en las vistas
+        holder.tvDoctorName.setText(doctorName);
+        holder.tvDate.setText(date);
+
+        // Listener para clics
+        holder.itemView.setOnClickListener(v -> {
+            Log.d("CitasAdapter", "Clic en cita: ID=" + cita.getId());
+            listener.onAppointmentClicked(cita);
+        });
     }
 
     @Override
     public int getItemCount() {
-        return citas.size();
+        return citasList.size();
     }
 
-    static class CitasViewHolder extends RecyclerView.ViewHolder {
-        TextView tvCita;
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView tvDoctorName, tvDate;
 
-        public CitasViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvCita = itemView.findViewById(R.id.tvCita);
+            tvDoctorName = itemView.findViewById(R.id.tvDoctorName);
+            tvDate = itemView.findViewById(R.id.tvDate);
         }
     }
 }

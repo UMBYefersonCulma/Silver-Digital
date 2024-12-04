@@ -16,6 +16,7 @@ dependencyResolutionManagement {
     repositories {
         google() // Repositorios principales para Android
         mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
 }
 

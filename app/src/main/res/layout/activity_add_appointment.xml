@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_dark">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edittext"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Título -->
+            <TextView
+                android:id="@+id/tvTituloAgregarCita"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:text="Agregar Nueva Cita Médica"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <!-- Campo Nombre del Médico -->
+            <EditText
+                android:id="@+id/etNombreMedico"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/rounded_edit_text"
+                android:hint="Nombre del Médico"
+                android:padding="12dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/secondary_text"
+                android:textSize="16sp" />
+
+            <!-- Campo Especialidad -->
+            <EditText
+                android:id="@+id/etEspecialidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/rounded_edit_text"
+                android:hint="Especialidad"
+                android:padding="12dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/secondary_text"
+                android:textSize="16sp" />
+
+            <!-- Campo Fecha -->
+            <EditText
+                android:id="@+id/etSeleccionarFecha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/rounded_edit_text"
+                android:clickable="true"
+                android:focusable="false"
+                android:hint="Seleccionar Fecha"
+                android:padding="12dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/secondary_text"
+                android:textSize="16sp" />
+
+            <!-- Campo Observaciones -->
+            <EditText
+                android:id="@+id/etObservaciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/rounded_edit_text"
+                android:hint="Observaciones"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:padding="12dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/secondary_text"
+                android:textSize="16sp" />
+
+            <!-- Botón Guardar -->
+            <Button
+                android:id="@+id/btnGuardarCita"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/green"
+                android:text="GUARDAR"
+                android:textAllCaps="true"
+                android:textColor="@color/button_text"
+                android:textSize="18sp"
+                android:padding="10dp" />
+
+            <!-- Botón Cancelar -->
+            <Button
+                android:id="@+id/btnCancelarCita"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/rounded_button_red"
+                android:text="CANCELAR"
+                android:textAllCaps="true"
+                android:textColor="@color/button_text"
+                android:textSize="18sp"
+                android:padding="10dp" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
