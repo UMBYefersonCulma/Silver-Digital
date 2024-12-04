@@ -36,7 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- CalendarView Section -->
-    <CalendarView
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:id="@+id/calendarView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

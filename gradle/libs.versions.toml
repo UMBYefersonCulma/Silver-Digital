@@ -25,6 +25,7 @@ materialVersion = "1.9.0"
 roomCompiler = "2.5.0"
 roomRuntime = "2.6.1"
 roomRuntimeVersion = "2.5.0"
+threetenabpVersion = "1.4.4"
 ui = "1.7.5"
 uiGraphics = "1.7.5"
 uiTestJunit4 = "1.7.5"
@@ -51,6 +52,7 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-room-compiler-v250 = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 androidx-room-runtime-v250 = { module = "androidx.room:room-runtime", version.ref = "roomRuntimeVersion" }
+jakewharton-threetenabp = { module = "com.jakewharton.threetenabp:threetenabp", version.ref = "threetenabpVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
